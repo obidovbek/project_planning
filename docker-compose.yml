@@ -1,4 +1,4 @@
-version: '1.0.0'
+version: "1.0.0"
 
 services:
   api:
@@ -26,7 +26,7 @@ services:
       - 4300:4300
     volumes:
       - ./frontend:/projects/project_planning/frontend
-      - /projects/project_planning/node_modules/
+      - /projects/project_planning/node_modules
     command: npm run start
   
   mongodb:

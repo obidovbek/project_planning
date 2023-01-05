@@ -2,7 +2,7 @@ FROM node:16 AS development
 
 WORKDIR /projects/project_planning/api
 
-COPY package*.json /projects/project_planning/api/
+COPY package*.json ./
 
 RUN npm install 
 
@@ -24,7 +24,7 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /projects/project_planning/api
 
-COPY --from=development /projects/project_planning/api .
+COPY --from=development /projects/project_planning/api/ .
 
 EXPOSE 3100
 # run app
