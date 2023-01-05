@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    
+    - name: Checkout
+      uses: actions/checkout@v1
+      
+    - name: Copy all files to repository
+      run : cp -rf . /home/admin/web/tt.ferpi.uz/project_planning/
+      
+#    - name: Copy dist frontend to public_html files to repository
+#      run : cp -rf ./frontend/dist/platform3/* /home/admin/web/tt.ferpi.uz/public_html/main/
+      
+    - name: Restart docker compose
+      run: docker compose restart
