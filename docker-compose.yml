@@ -1,0 +1,38 @@
+version: '1.0.0'
+
+services:
+  api:
+    build: 
+      dockerfile: Dockerfile
+      context: ./api
+      target: development
+    container_name: project_planning_api
+    restart: always
+    ports:
+      - 3100:3100
+    volumes: 
+      - ./api:/projects/project_planning/api
+      - /projects/project_planning/api/node_modules/
+    command: npm run start:dev 
+
+  frontend:
+    build: 
+      dockerfile: Dockerfile
+      context: ./frontend
+      target: development
+    container_name: project_planning_frontend
+    restart: always
+    ports:
+      - 4300:4300
+    volumes:
+      - ./frontend:/projects/project_planning/frontend
+      - /projects/project_planning/node_modules/
+    command: npm run start
+  
+  mongodb:
+      image: mongo:latest
+      restart: always # the most important line for this post
+      environment:
+        - MONGODB_DATABASE="project_planning"
+      ports:
+        - 27017:27017
