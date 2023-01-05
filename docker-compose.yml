@@ -35,4 +35,4 @@ services:
       environment:
         - MONGODB_DATABASE="project_planning"
       ports:
-        - 27017:27017
+        - 27018:27018
