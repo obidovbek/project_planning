@@ -5,54 +5,41 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
-// import { HeaderComponent } from './components/header/header.component';
-// import { SidebarComponent } from './components/sidebar/sidebar.component';
-// import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
-// import { PromptComponent } from './components/modal/prompt/prompt.component';
-// import { FormsModule } from '@angular/forms';
-// import { MultiSelectDropdownComponent } from './components/multi-select-dropdown/multi-select-dropdown.component';
-// import { AddNewLessonModalComponent } from './components/header/modal/add-new-lesson/add-new-lesson.component';
-// import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-// import { DayNamePipe } from 'src/app/shared/pipes/day-name.component';
+import { ALL_TAIGA_UI_MODULES } from './all-taigu-modules/all-taigu-modules.module';
+import { TuiDialogComponent } from './components/taiga-ui/tui-dialog/tui-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TUI_ICONS_PATH, tuiIconsPathFactory,  TUI_SANITIZER } from "@taiga-ui/core";
+import {NgDompurifySanitizer} from '@tinkoff/ng-dompurify'
+import { DialogComponent } from './components/taiga-ui/dialog/tui-dialog.component';
+
 @NgModule({
     declarations: [
       HeaderComponent,
-    //   SidebarComponent,
       LeftSidebarComponent,
       ContentLayoutComponent,
-    //   PromptComponent,
-    //   MultiSelectDropdownComponent,
-    //   AddNewLessonModalComponent,
-    //   DayNamePipe
-    //   RightSidebarComponent,
-    //   LoadingComponent,
-    //   MultiSelectDropdownComponent,
-    //   PromptComponent,
-    //   ConfirmComponent,
-    //   AlertComponent
+      TuiDialogComponent,
+      DialogComponent
     ],
     imports: [
       CommonModule,
-    // //   IonicModule.forRootp09(),
       RouterModule,
-    //   FormsModule,
-    //   AutocompleteLibModule
-    // //   DynamicFormModule,
-    // //   FormsModule,
-    // //   ReactiveFormsModule
+      ReactiveFormsModule,
+      FormsModule,
+      ...ALL_TAIGA_UI_MODULES
     ],
     providers: [
-    //   NavService, 
-    //   WINDOW_PROVIDERS,
-    //   { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+      {
+        provide: TUI_ICONS_PATH,
+        useValue: tuiIconsPathFactory('https://taiga-ui.dev/assets/taiga-ui/icons'),
+      },
+      {
+        provide: TUI_SANITIZER,
+        useClass: NgDompurifySanitizer,
+      },
     ],
     exports: [
-    //   MultiSelectDropdownComponent,
-    //   DayNamePipe
-    //     // FeatherIconsComponent, 
-    //     // ToggleFullscreenDirective, 
-    //     // MultiSelectDropdownComponent
-        
+      TuiDialogComponent,
+      DialogComponent
     ]
   })
   export class SharedModule { }

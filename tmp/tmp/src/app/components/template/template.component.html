@@ -1,0 +1,117 @@
+
+<div class="template-user">
+    
+    <div class="template-user-header">
+        <div class="template-user-header-logo"><img src="/assets/images/ferpi-logo.png" alt=""></div>
+        <div class="template-user-header-content">Organik o‘g‘it va po‘choqlardan gaz olish</div>
+    </div>
+    <div class="template-user-wrap">
+        <div class="template-user-wrap-col">
+            <div class="template-user-wrap-item border-1">
+                <div class="template-user-wrap-item-header bg-color-1">Maqsad</div>
+                <div class="template-user-wrap-item-body">
+                    <ul class="item-parts goal">
+                        <li *ngFor="let item of dataService.plan.goal; let idx = index;">
+                            {{item}}
+                            <button
+                                tuiIconButton
+                                size="xs"
+                                type="button"
+                                appearance="primary"
+                                class="tui-space_right-3 tui-space_bottom-3"
+                                icon="tuiIconTrash"
+                                (click)="removeItem('goal', idx)"
+                                [showLoader]="false"
+                            ></button>
+                        </li>
+                    </ul>
+                    <div style="position:absolute; bottom: 0; right: 0;">
+                        <button
+                            tuiIconButton
+                            size="s"
+                            type="button"
+                            appearance="primary"
+                            class="tui-space_right-3 tui-space_bottom-3"
+                            icon="tuiIconPlus"
+                            (click)="addItem('goal')"
+                            [showLoader]="false"
+                        ></button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="template-user-wrap-item border-1">
+                <div class="template-user-wrap-item-header bg-color-1">Loyiha pasporti</div>
+                <div class="template-user-wrap-item-body">
+                    <div class="proj_pass">
+                        <div class="proj_pass-title">Loyiha tashabbuskori:</div>
+                        <div class="proj_pass-icon"><fa-icon [icon]="f_A.faUser"></fa-icon></div>
+                        <div class="proj_pass-content">"Kimyo texnologiya" fakulteti 72-21 elita guruh talabasi Jo‘rayev Javohir</div>
+                    </div>
+                    <div class="proj_pass">
+                        <div class="proj_pass-title">Loyiha qiymati (mln so‘m):</div>
+                        <div class="proj_pass-icon"><fa-icon [icon]="f_A.faMoneyBill"></fa-icon></div>
+                        <div class="proj_pass-content">300 mln so‘m</div>
+                    </div>
+                    <div class="proj_pass">
+                        <div class="proj_pass-title">Tashkil etilayotgan Ish o‘rni:</div>
+                        <div class="proj_pass-icon"><fa-icon [icon]="f_A.faPeopleGroup"></fa-icon></div>
+                        <div class="proj_pass-content">7 nafar</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="template-user-wrap-col">
+            <div class="template-user-wrap-item border-2">
+                <div class="template-user-wrap-item-header bg-color-2">Vazifalari</div>
+                <div class="template-user-wrap-item-body">
+                    <ul class="item-parts tasks">
+                        <li>Organik o‘g‘it va meva-sabzavotlarni po‘chog‘idan tabiy gaz olish</li>
+                        <li>Har bir aholini gaz bilan taminlash oladigan qurilma yasash</li>
+                        <li>Atrof muhitni obodligini taminlash</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <ngx-masonry [options]="masonryOptionsImages">
+                    <div ngxMasonryItem class="masonry-item"  *ngFor="let picture of masonryImages">
+                      <img style="max-width:140px;" src="{{picture.picture}}">
+                    </div>
+                </ngx-masonry>
+            </div>
+        </div>
+        <div class="template-user-wrap-col">
+            <div class="template-user-wrap-item border-3">
+                <div class="template-user-wrap-item-header bg-color-3">Biriktirilgan kafedralar</div>
+                <div class="template-user-wrap-item-body">
+                    <div class="empty-item">Yo‘q</div>
+                </div>
+            </div>
+            <div class="template-user-wrap-item border-3">
+                <div class="template-user-wrap-item-header bg-color-3">Kutiladigan natija</div>
+                <div class="template-user-wrap-item-body">
+                    <ul class="item-parts con_dep">
+                        <li>Organik o‘g‘it va meva-sabzavotlarni po‘chog‘idan tabiy gaz olish</li>
+                        <li>Har bir aholini gaz bilan taminlash oladigan qurilma yasash</li>
+                        <li>Atrof muhitni obodligini taminlash</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="template-user-wrap-item border-4">
+                <div class="template-user-wrap-item-header bg-color-4 fs16 text_center">Biriktirilgan spin-off(Unitar Korxona)lar</div>
+                <div class="template-user-wrap-item-body wrap-item-body-4">
+                    <div class="empty-item">Yo‘q</div>
+                    <!-- <ul class="item-parts con_dep">
+                        <li>Organik o‘g‘it va meva-sabzavotlarni po‘chog‘idan tabiy gaz olish</li>
+                        <li>Har bir aholini gaz bilan taminlash oladigan qurilma yasash</li>
+                        <li>Atrof muhitni obodligini taminlash</li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="open">
+    <app-tui-dialog [type]="type" (closeDialogEvent)="closeDialogEvent($event)"></app-tui-dialog>
+</div>

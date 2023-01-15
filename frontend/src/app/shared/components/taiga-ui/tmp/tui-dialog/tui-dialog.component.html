@@ -1,0 +1,30 @@
+<tui-root>
+    <ng-template
+        let-observer
+        [tuiDialogOptions]="{label: 'Declarative directive', size: 's'}"
+        [(tuiDialog)]="open"
+    >
+    <form
+        [formGroup]="exampleForm"
+        (ngSubmit)="closeDialog(observer)"
+    >
+        <p>This abstracts away service and subscription</p>
+        <tui-input
+            tuiAutoFocus
+            formControlName="exampleControl"
+        >
+            Some value
+        </tui-input>
+        <p>
+            <button
+                tuiButton
+                type="submit"
+            >
+                Ok
+            </button>
+        </p>
+    </form>
+    </ng-template>
+
+</tui-root>
+

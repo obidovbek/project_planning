@@ -1,0 +1,24 @@
+
+  <form
+        [formGroup]="exampleForm"
+        (ngSubmit)="ok()"
+    >
+        <tui-input
+            tuiAutoFocus
+            formControlName="exampleControl"
+        >
+            Biror ma'lumot
+        </tui-input>
+        <p>
+          <button
+              tuiButton
+              type="submit"
+              class="tui-space_right-3"
+              size="m"
+          >
+              Ok
+          </button>
+        </p>
+    </form>
+
+

@@ -1,0 +1,281 @@
+<tui-root>
+    <div class="template-user">
+        
+        <div class="template-user-header">
+            <div class="template-user-header-logo"><img src="/assets/images/ferpi-logo.png" alt=""></div>
+            <div class="template-user-header-content">
+                <div>{{dataService.plan.mainData.title}}</div>
+                <div style="margin-left: 5px;">
+                    <button
+                        tuiIconButton
+                        size="xs"
+                        type="button"
+                        appearance="primary"
+                        class="tui-space_right-3 tui-space_bottom-3 m0"
+                        icon="tuiIconEdit"
+                        (click)="showDialog('title')"
+                        [showLoader]="false"
+                    ></button>
+                </div> 
+            </div>
+        </div>
+        <div class="template-user-wrap">
+            <div class="template-user-wrap-col">
+                <div class="template-user-wrap-item border-1">
+                    <div class="template-user-wrap-item-header bg-color-1">Maqsad</div>
+                    <div class="template-user-wrap-item-body">
+                        <ul class="item-parts goal">
+                            <li *ngFor="let item of dataService.plan.goal; let idx = index;">
+                                {{item}}
+                                <button
+                                    tuiIconButton
+                                    size="xs"
+                                    type="button"
+                                    appearance="primary"
+                                    class="tui-space_right-3 tui-space_bottom-3"
+                                    icon="tuiIconTrash"
+                                    (click)="removeItem('goal', idx)"
+                                    [showLoader]="false"
+                                ></button>
+                            </li>
+                        </ul>
+                        <div *ngIf="!dataService.plan.goal.length" class="empty-item bg-trp-1">Yo‘q</div>
+                        <div style="position:absolute; bottom: 0; right: 0;">
+                            <button
+                                tuiIconButton
+                                size="s"
+                                type="button"
+                                appearance="primary"
+                                class="tui-space_right-3 tui-space_bottom-3"
+                                icon="tuiIconPlus"
+                                (click)="showDialog('goal')"
+                                [showLoader]="false"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-user-wrap-item border-1">
+                    <div class="template-user-wrap-item-header bg-color-1">Loyiha pasporti</div>
+                    <div class="template-user-wrap-item-body">
+                        <div class="proj_pass">
+                            <div class="proj_pass-title">Loyiha tashabbuskori:</div>
+                            <div class="proj_pass-icon"><fa-icon [icon]="f_A.faUser"></fa-icon></div>
+                            <div class="proj_pass-content">
+                                <div>{{dataService.plan.mainData.owner}}</div>
+                                <div style="margin-left: 5px;">
+                                    <button
+                                        tuiIconButton
+                                        size="xs"
+                                        type="button"
+                                        appearance="primary"
+                                        class="tui-space_right-3 tui-space_bottom-3 m0"
+                                        icon="tuiIconEdit"
+                                        (click)="showDialog('owner')"
+                                        [showLoader]="false"
+                                    ></button>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="proj_pass">
+                            <div class="proj_pass-title">Loyiha qiymati (mln so‘m):</div>
+                            <div class="proj_pass-icon"><fa-icon [icon]="f_A.faMoneyBill"></fa-icon></div>
+                            <div class="proj_pass-content">
+                                <div>{{dataService.plan.mainData.cost}}</div>
+                                <div style="margin-left: 5px;">
+                                    <button
+                                        tuiIconButton
+                                        size="xs"
+                                        type="button"
+                                        appearance="primary"
+                                        class="tui-space_right-3 tui-space_bottom-3 m0"
+                                        icon="tuiIconEdit"
+                                        (click)="showDialog('cost')"
+                                        [showLoader]="false"
+                                    ></button>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="proj_pass">
+                            <div class="proj_pass-title">Tashkil etilayotgan ish o‘rni:</div>
+                            <div class="proj_pass-icon"><fa-icon [icon]="f_A.faPeopleGroup"></fa-icon></div>
+                            <div class="proj_pass-content">
+                                <div>{{dataService.plan.mainData.workplace}}</div>
+                                <div style="margin-left: 5px;">
+                                    <button
+                                        tuiIconButton
+                                        size="xs"
+                                        type="button"
+                                        appearance="primary"
+                                        class="tui-space_right-3 tui-space_bottom-3 m0"
+                                        icon="tuiIconEdit"
+                                        (click)="showDialog('workplace')"
+                                        [showLoader]="false"
+                                    ></button>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="template-user-wrap-col">
+                <div class="template-user-wrap-item border-2">
+                    <div class="template-user-wrap-item-header bg-color-2">Vazifalari</div>
+                    <div class="template-user-wrap-item-body">
+                        <ul class="item-parts tasks">
+                            <li *ngFor="let item of dataService.plan.tasks; let idx = index;">
+                                {{item}}
+                                <button
+                                    tuiIconButton
+                                    size="xs"
+                                    type="button"
+                                    appearance="primary"
+                                    class="tui-space_right-3 tui-space_bottom-3"
+                                    icon="tuiIconTrash"
+                                    (click)="removeItem('tasks', idx)"
+                                    [showLoader]="false"
+                                ></button>
+                            </li>
+                        </ul>
+                        <div *ngIf="!dataService.plan.tasks.length" class="empty-item bg-trp-2">Yo‘q</div>
+                        <div style="position:absolute; bottom: 0; right: 0;">
+                            <button
+                                tuiIconButton
+                                size="s"
+                                type="button"
+                                appearance="primary"
+                                class="tui-space_right-3 tui-space_bottom-3"
+                                icon="tuiIconPlus"
+                                (click)="showDialog('tasks')"
+                                [showLoader]="false"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <img *ngFor="let picture of masonryImages" style="width:100%;" [src]="picture">
+                    </div>
+                    <!-- <ngx-masonry [options]="masonryOptionsImages">
+                        <div ngxMasonryItem class="masonry-item"  *ngFor="let picture of masonryImages">
+                        <img style="width:100%;" [src]="picture">
+                        </div>
+                    </ngx-masonry> -->
+                    <tui-input-files
+                        accept="image/*"
+                        [multiple]="true"
+                        [formControl]="control"
+                        (reject)="onReject($event)"
+                        (ngModelChange)="control.markAsTouched()"
+                    ></tui-input-files>
+                    
+                    <tui-error
+                        [formControl]="control"
+                        [error]="['maxLength'] | tuiFieldError | async"
+                    ></tui-error>
+                </div>
+            </div>
+            <div class="template-user-wrap-col">
+                <div class="template-user-wrap-item border-3">
+                    <div class="template-user-wrap-item-header bg-color-3">Biriktirilgan kafedralar</div>
+                    <div class="template-user-wrap-item-body">
+                        <ul class="item-parts con_dep">
+                            <li *ngFor="let item of dataService.plan.kafed; let idx = index;">
+                                {{item}}
+                                <button
+                                    tuiIconButton
+                                    size="xs"
+                                    type="button"
+                                    appearance="primary"
+                                    class="tui-space_right-3 tui-space_bottom-3"
+                                    icon="tuiIconTrash"
+                                    (click)="removeItem('kafed', idx)"
+                                    [showLoader]="false"
+                                ></button>
+                            </li>
+                        </ul>
+                        <div *ngIf="!dataService.plan.kafed.length" class="empty-item bg-trp-3">Yo‘q</div>
+                        <div style="position:absolute; bottom: 0; right: 0;">
+                            <button
+                                tuiIconButton
+                                size="s"
+                                type="button"
+                                appearance="primary"
+                                class="tui-space_right-3 tui-space_bottom-3"
+                                icon="tuiIconPlus"
+                                (click)="showDialog('kafed')"
+                                [showLoader]="false"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-user-wrap-item border-3">
+                    <div class="template-user-wrap-item-header bg-color-3">Kutiladigan natija</div>
+                    <div class="template-user-wrap-item-body">
+                        <ul class="item-parts con_dep">
+                            <li *ngFor="let item of dataService.plan.conDep; let idx = index;">
+                                {{item}}
+                                <button
+                                    tuiIconButton
+                                    size="xs"
+                                    type="button"
+                                    appearance="primary"
+                                    class="tui-space_right-3 tui-space_bottom-3"
+                                    icon="tuiIconTrash"
+                                    (click)="removeItem('conDep', idx)"
+                                    [showLoader]="false"
+                                ></button>
+                            </li>
+                        </ul>
+                        <div *ngIf="!dataService.plan.conDep.length" class="empty-item bg-trp-3">Yo‘q</div>
+                        <div style="position:absolute; bottom: 0; right: 0;">
+                            <button
+                                tuiIconButton
+                                size="s"
+                                type="button"
+                                appearance="primary"
+                                class="tui-space_right-3 tui-space_bottom-3"
+                                icon="tuiIconPlus"
+                                (click)="showDialog('conDep')"
+                                [showLoader]="false"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-user-wrap-item border-4">
+                    <div class="template-user-wrap-item-header bg-color-4 fs16 text_center">Biriktirilgan spin-off(Unitar Korxona)lar</div>
+                    <div class="template-user-wrap-item-body wrap-item-body-4">
+                        <ul class="item-parts spin_of">
+                            <li *ngFor="let item of dataService.plan.spinOf; let idx = index;">
+                                {{item}}
+                                <button
+                                    tuiIconButton
+                                    size="xs"
+                                    type="button"
+                                    appearance="primary"
+                                    class="tui-space_right-3 tui-space_bottom-3"
+                                    icon="tuiIconTrash"
+                                    (click)="removeItem('spinOf', idx)"
+                                    [showLoader]="false"
+                                ></button>
+                            </li>
+                        </ul>
+                        <div *ngIf="!dataService.plan.spinOf.length" class="empty-item bg-trp-4">Yo‘q</div>
+                        <div style="position:absolute; bottom: 0; right: 0;">
+                            <button
+                                tuiIconButton
+                                size="s"
+                                type="button"
+                                appearance="primary"
+                                class="tui-space_right-3 tui-space_bottom-3"
+                                icon="tuiIconPlus"
+                                (click)="showDialog('spinOf')"
+                                [showLoader]="false"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</tui-root>

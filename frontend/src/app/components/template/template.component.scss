@@ -1,14 +1,18 @@
 .template-user{
-    max-width: 1040px;
-    width: 100%;
-    // max-height: 890px;
-    // height: 100%;
+    width: 1040px;
+    max-width: 100%;
+    padding: 0px;
     margin: 0 auto;
     position: relative;
     &-header{
         margin-top: 32px;
         height: 56px;
         display: flex;
+        @media only screen and (max-width: 950px){
+            flex-direction: column;
+            height: auto;
+            background-color: #e1f3fd;
+        }
         &-logo{
             position: absolute;
             top: 0;
@@ -22,6 +26,9 @@
             & img{
                 width: 115px;
             }
+            @media only screen and (max-width: 950px){
+                left: calc(50% - 66px);
+            }
         }
         &-content{
             width: 100%;
@@ -30,28 +37,50 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 56px;
             font-size: 23px;
             font-weight: 600;
+            @media only screen and (max-width: 950px){
+                margin-top: 60px;
+            }
         }
     }
     &-wrap{
         display: flex;
         align-items: flex-start;
         margin-top: 14px;
+        @media only screen and (max-width: 950px){
+            flex-direction: column;
+        }
         &-col{
             &:nth-child(1){
                 flex: 0 0 29.8%;
                 width: 29.8%;
                 margin-right: 11px;
+                @media only screen and (max-width: 950px){
+                    flex: 0 0 auto;
+                    width: 100%;
+                    margin-right: 0;
+                }
             }
             &:nth-child(2){
                 flex: 0 0 33.9%;
                 width: 33.9%;
-                margin-right: 7px;
+                margin-right: 11px;
+                @media only screen and (max-width: 950px){
+                    flex: 0 0 auto;
+                    width: 100%;
+                    margin-right: 0;
+                }
             }
             &:nth-child(3){
                 flex: 0 0 33.9%;
                 width: 33.9%;
+                @media only screen and (max-width: 950px){
+                    flex: 0 0 auto;
+                    width: 100%;
+                    margin-right: 0;
+                }
             }
         }
         &-item{
@@ -68,6 +97,7 @@
             &-body{
                 min-height: 206px;
                 padding: 10px;
+                position: relative;
                 & ul{
                     margin: 0;
                     padding: 0;
@@ -94,8 +124,14 @@
 .con_dep li:nth-child(odd){
     background-color: #00a7513a;
 } 
+.spin_of li:nth-child(odd){
+    background-color: #1f497c49;
+} 
 .bg-color-1{
     background-color: #00adef;
+}
+.bg-trp-1 {
+    background-color: #00abef2f;
 }
 .border-1{
     border: 1px solid #00adef;
@@ -103,17 +139,26 @@
 .bg-color-2{
     background-color: #f6821f;
 }
+.bg-trp-2 {
+    background-color: #f6831f36;
+}
 .border-2{
     border: 1px solid #f6821f;
 }
 .bg-color-3{
     background-color: #00a750;
 }
+.bg-trp-3 {
+    background-color: #00a7513a;
+}
 .border-3{
     border: 1px solid #00a750;
 }
 .bg-color-4{
     background-color: #1f497c;
+}
+.bg-trp-4 {
+    background-color: #1f497c49;
 }
 .border-4{
     border: 1px solid #1f497c;
@@ -131,13 +176,28 @@
     display: flex;
     justify-content: center;
     padding: 10px 0; 
-    background-color: #00a7513a;
+    // background-color: #00a7513a;
     font-size: 14px; 
+}
+.posrel{
+    position: relative;
+}
+.pat5r5{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.m0{
+    margin: 0;
+}
+.mb10{
+    margin-bottom: 10px;
 }
 .proj_pass{
     display: flex;
     padding: 10px;
     font-size: 14px;
+    overflow: hidden;
     &:nth-child(odd){
         background-color: #00abef2f;
     }
@@ -151,3 +211,5 @@
     }
 }
 /// 312 357 357 1040
+/// 
+/// 

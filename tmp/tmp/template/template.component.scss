@@ -1,0 +1,204 @@
+.template-user{
+    width: 1040px;
+    max-width: 100%;
+    padding: 0px;
+    margin: 0 auto;
+    position: relative;
+    &-header{
+        margin-top: 32px;
+        height: 56px;
+        display: flex;
+        @media only screen and (max-width: 950px){
+            flex-direction: column;
+            height: auto;
+            background-color: #e1f3fd;
+        }
+        &-logo{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 56px;
+            width: 133px;
+            background-color: #c6d9f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            & img{
+                width: 115px;
+            }
+            @media only screen and (max-width: 950px){
+                left: calc(50% - 66px);
+            }
+        }
+        &-content{
+            width: 100%;
+            background-color: #e1f3fd;
+            color: #2c475f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 56px;
+            font-size: 23px;
+            font-weight: 600;
+            @media only screen and (max-width: 950px){
+                margin-top: 60px;
+            }
+        }
+    }
+    &-wrap{
+        display: flex;
+        align-items: flex-start;
+        margin-top: 14px;
+        @media only screen and (max-width: 950px){
+            flex-direction: column;
+        }
+        &-col{
+            &:nth-child(1){
+                flex: 0 0 29.8%;
+                width: 29.8%;
+                margin-right: 11px;
+                @media only screen and (max-width: 950px){
+                    flex: 0 0 auto;
+                    width: 100%;
+                    margin-right: 0;
+                }
+            }
+            &:nth-child(2){
+                flex: 0 0 33.9%;
+                width: 33.9%;
+                margin-right: 11px;
+                @media only screen and (max-width: 950px){
+                    flex: 0 0 auto;
+                    width: 100%;
+                    margin-right: 0;
+                }
+            }
+            &:nth-child(3){
+                flex: 0 0 33.9%;
+                width: 33.9%;
+                @media only screen and (max-width: 950px){
+                    flex: 0 0 auto;
+                    width: 100%;
+                    margin-right: 0;
+                }
+            }
+        }
+        &-item{
+            margin-bottom: 10px;
+            &-header{
+                font-size: 22px;
+                text-transform: uppercase;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 41px;
+                color: #fff;
+            }
+            &-body{
+                min-height: 206px;
+                padding: 10px;
+                position: relative;
+                & ul{
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+        }
+    }
+
+}
+.item-parts{
+    & li {
+        list-style-type: disclosure-closed;
+        padding: 5px 10px;
+        list-style-position: inside;
+        font-size: 14px; 
+    }
+}
+.goal li:nth-child(odd){
+    background-color: #00abef2f;
+}
+.tasks li:nth-child(odd){
+    background-color: #f6831f36;
+}
+.con_dep li:nth-child(odd){
+    background-color: #00a7513a;
+} 
+.spin_of li:nth-child(odd){
+    background-color: #1f497c49;
+} 
+.bg-color-1{
+    background-color: #00adef;
+}
+.bg-trp-1 {
+    background-color: #00abef2f;
+}
+.border-1{
+    border: 1px solid #00adef;
+}
+.bg-color-2{
+    background-color: #f6821f;
+}
+.bg-trp-2 {
+    background-color: #f6831f36;
+}
+.border-2{
+    border: 1px solid #f6821f;
+}
+.bg-color-3{
+    background-color: #00a750;
+}
+.bg-trp-3 {
+    background-color: #00a7513a;
+}
+.border-3{
+    border: 1px solid #00a750;
+}
+.bg-color-4{
+    background-color: #1f497c;
+}
+.bg-trp-4 {
+    background-color: #1f497c49;
+}
+.border-4{
+    border: 1px solid #1f497c;
+}
+.fs16{
+    font-size: 16px;
+}
+.text_center{
+    text-align: center;
+}
+.wrap-item-body-4{
+    min-height: 50px;
+}
+.empty-item{
+    display: flex;
+    justify-content: center;
+    padding: 10px 0; 
+    // background-color: #00a7513a;
+    font-size: 14px; 
+}
+.m0{
+    margin: 0;
+}
+.proj_pass{
+    display: flex;
+    padding: 10px;
+    font-size: 14px;
+    overflow: hidden;
+    &:nth-child(odd){
+        background-color: #00abef2f;
+    }
+    & div {
+        display: flex;
+        align-items: center;
+    }
+    &-icon{
+        font-size: 25px;
+        margin: 0 10px
+    }
+}
+/// 312 357 357 1040
+/// 
+/// 
