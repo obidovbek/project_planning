@@ -2,7 +2,21 @@
     <div class="template-user">
         
         <div class="template-user-header">
-            <div class="template-user-header-logo"><img src="/assets/images/ferpi-logo.png" alt=""></div>
+            <div>
+                <a
+                    tuiButton
+                    appearance="backButton"
+                    [routerLink]="['/welcome']"
+                >
+                    <tui-svg
+                        src="tuiIconArrowLeftLarge"
+                        class="icon"
+                    ></tui-svg>
+                </a>
+            </div>
+            <div class="template-user-header-logo">
+                <img src="/assets/images/ferpi-logo.png" alt="">
+            </div>
             <div class="template-user-header-content">
                 <div>{{dataService.plan.mainData.title}}</div>
                 <div style="margin-left: 5px;">

@@ -30,6 +30,14 @@
         })
     });
 }
+[tuiWrapper][data-appearance='firstButton']{
+    background: #404558;
+    color: #ffffff;
+}
+[tuiWrapper][data-appearance='backButton']{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
 
 @import '~@taiga-ui/core/styles/taiga-ui-local';
  
@@ -48,4 +56,32 @@
         height: 5.3125rem;
         box-shadow: 0 0 0 2px rgba(204, 228, 255, 0.5) inset;
     }
+}
+
+
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+:host {
+    display: block;
+}
+
+.stepper {
+    margin-bottom: 2rem;
+}
+
+.uppercase-name {
+    text-transform: uppercase;
+}
+
+.account {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.ticks-labels {
+    .tui-slider-ticks-labels();
+
+    color: var(--tui-text-02);
+    margin-top: 0.25rem;
 }

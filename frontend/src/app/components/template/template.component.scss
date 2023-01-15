@@ -16,7 +16,7 @@
         &-logo{
             position: absolute;
             top: 0;
-            left: 0;
+            left: 45px;
             height: 56px;
             width: 133px;
             background-color: #c6d9f1;
@@ -41,7 +41,7 @@
             font-size: 23px;
             font-weight: 600;
             @media only screen and (max-width: 950px){
-                margin-top: 60px;
+                // margin-top: 60px;
             }
         }
     }

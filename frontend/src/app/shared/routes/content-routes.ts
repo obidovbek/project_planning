@@ -16,4 +16,14 @@ export const contentUser: Routes = [
     }
   }
 ];
+export const contentAdmin: Routes = [
+  {
+    path: 'admin',
+    loadChildren: () => import('../../components/login/login.module').then(m => m.LoginModule),
+    data: {
+      breadcrumb: 'Kirish'
+    }
+  },
+  
+];
 

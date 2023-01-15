@@ -1,0 +1,42 @@
+<div class="login-wrap">
+    <div class="tui-container">
+        <form [formGroup]="loginForm">
+            <div class="tui-row tui-row_sme">
+                <div class="tui-col_6">
+                    <h1 class="tui-form__header tui-form__header_margin-top_none">Kirish</h1>
+                    <div class="tui-form__row">
+                        <tui-input
+                            tuiTextfieldExampleText="Field placeholder"
+                            formControlName="nameValue"
+                        >
+                            Login
+                            <span class="tui-required"></span>
+                        </tui-input>
+                        <tui-error
+                            formControlName="nameValue"
+                            [error]="[] | tuiFieldError | async"
+                        ></tui-error>
+                    </div>
+                    <div class="tui-form__row">
+                        <tui-input-password formControlName="passwordValue">Parolni kirgizing</tui-input-password>
+                        <tui-error
+                            formControlName="passwordValue"
+                            [error]="[] | tuiFieldError | async"
+                        ></tui-error>
+                    </div>
+                    <div class="tui-form__buttons">
+                        <button
+                            tuiButton
+                            size="l"
+                            type="submit"
+                            class="tui-form__button"
+                        >
+                            Jo‘natish
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

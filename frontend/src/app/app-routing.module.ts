@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { contentUser } from './shared/routes/content-routes';
+import { contentUser, contentAdmin } from './shared/routes/content-routes';
 import { ContentLayoutComponent } from './shared/layout/content-layout/content-layout.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/template',
+    redirectTo: '/welcome',
     pathMatch: 'full'
   },
   {
@@ -17,6 +17,15 @@ const routes: Routes = [
     },
     // canActivate: [AuthGuard]
   },
+  {
+    path: '',
+    component: ContentLayoutComponent,
+    children: contentAdmin,
+    data: {
+      role: 'ADMIN'
+    },
+    // canActivate: [AuthGuard]
+  },
   // {
   //   path: 'auth/login',
   //   component: LoginComponent,
@@ -25,7 +34,7 @@ const routes: Routes = [
   //   path: 'auth/recover-pass',
   //   component: RecoverPasswordComponent,
   // },
-  {path: '**', redirectTo: '/template'}
+  {path: '**', redirectTo: '/welcome'}
 ];
 
 @NgModule({

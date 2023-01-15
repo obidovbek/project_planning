@@ -1,0 +1,30 @@
+<tui-carousel
+    [duration]="4000"
+    [(index)]="index"
+>
+    <ng-container *ngFor="let item of items">
+        <tui-island *tuiItem>
+            <div>
+                <img class="slider-img" src="assets/images/main-slider-1.png">
+            </div>
+            <div class="slider-wrap">
+                <div class="slider-content">
+                    <h1 class="tui-island__title">Loyihangizni tekshirish uchun jo‘nating</h1>
+                    <a
+                        tuiButton
+                        appearance="firstButton"
+                        [routerLink]="['/template']"
+                    >
+                        Loyiha jo‘natish
+                    </a>
+                </div>
+            </div>
+        </tui-island>
+    </ng-container>
+</tui-carousel>
+<tui-pagination
+    size="s"
+    class="pagination"
+    [length]="items.length"
+    [(index)]="index"
+></tui-pagination>
