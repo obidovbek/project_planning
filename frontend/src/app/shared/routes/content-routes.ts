@@ -24,6 +24,13 @@ export const contentAdmin: Routes = [
       breadcrumb: 'Kirish'
     }
   },
+  {
+    path: 'plans',
+    loadChildren: () => import('../../components/plans/plans.module').then(m => m.PlansModule),
+    data: {
+      breadcrumb: 'Loyihalar'
+    }
+  },
   
 ];
 
