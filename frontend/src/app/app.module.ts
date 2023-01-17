@@ -9,6 +9,8 @@ import { SharedModule } from './shared/shared.module';
 import { TemplateModule } from './components/template/template.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       TemplateModule,
       SharedModule,
       BrowserAnimationsModule,
+      HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

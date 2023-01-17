@@ -2,10 +2,10 @@
     [duration]="4000"
     [(index)]="index"
 >
-    <ng-container *ngFor="let item of items">
+    <ng-container *ngFor="let item of items; let idx=index;">
         <tui-island *tuiItem>
-            <div>
-                <img class="slider-img" src="assets/images/main-slider-1.png">
+            <div style="display: flex; justify-content: center;">
+                <img class="slider-img" [src]="item">
             </div>
             <div class="slider-wrap">
                 <div class="slider-content">

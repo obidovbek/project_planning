@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { contentUser, contentAdmin } from './shared/routes/content-routes';
 import { ContentLayoutComponent } from './shared/layout/content-layout/content-layout.component';
+import { AutoLoginGuard } from './guards/auto-login.guard';
+import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
@@ -15,7 +17,6 @@ const routes: Routes = [
     data: {
       role: 'USER'
     },
-    // canActivate: [AuthGuard]
   },
   {
     path: '',
@@ -24,21 +25,22 @@ const routes: Routes = [
     data: {
       role: 'ADMIN'
     },
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'auth/login',
-  //   component: LoginComponent,
-  // },
-  // {
-  //   path: 'auth/recover-pass',
-  //   component: RecoverPasswordComponent,
-  // },
+  {
+    path: 'admin',
+    loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule),
+    data: {
+      breadcrumb: 'Kirish'
+    },
+    canActivate: [AutoLoginGuard]
+  },
   {path: '**', redirectTo: '/welcome'}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

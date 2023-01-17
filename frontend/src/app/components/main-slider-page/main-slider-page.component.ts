@@ -15,9 +15,10 @@ export class MainSliderPageComponent implements OnInit {
     index = 2;
  
     readonly items = [
-        `John Cleese`,
-        `Eric Idle`,
-        `Michael Palin`,
+        `assets/images/slider/1.png`,
+        `assets/images/slider/2.jpg`,
+        `assets/images/slider/3.jpg`,
+        `assets/images/slider/4.jpg`,
     ];
 }
 
