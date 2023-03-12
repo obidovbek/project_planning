@@ -21,7 +21,7 @@ export class AutoLoginGuard implements CanActivate {
         if (!user) {
           return true;
         } else {
-          let role = user['role'];
+          let role = user['roles']['tiil'];
           if (role === "ADMIN") {
             this.router.navigateByUrl('/plans');
             return false;
