@@ -2,6 +2,7 @@
 import { faUser, faMoneyBill, faPeopleGroup } from '@fortawesome/free-solid-svg-icons';
 import { NgxMasonryOptions, NgxMasonryComponent } from "ngx-masonry";
 import { DataService } from 'src/app/shared/services/data.service';
+import { HttpService } from 'src/app/shared/services/http.service';
 
 import {
 	ChangeDetectionStrategy,
@@ -37,7 +38,8 @@ export class TemplateComponent implements OnInit {
 	constructor(
 		@Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
 		@Inject(Injector) private readonly injector: Injector,
-		public dataService:DataService
+		public dataService:DataService,
+		public httpService:HttpService
 	) {}	
 
     f_A = {faUser, faMoneyBill, faPeopleGroup}
@@ -89,6 +91,12 @@ export class TemplateComponent implements OnInit {
 			  console.log('Dialog closed');
 			}
 		});
+	}
+	postProject(){
+		this.httpService.postProject()
+		.subscribe(res=>{
+			console.log('postProject', res)
+		})
 	}
 	addItem(type:string, value:any){
 		if(!value){return;}

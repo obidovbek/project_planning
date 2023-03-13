@@ -7,17 +7,17 @@ export class DataService {
 
   constructor() { }
   plan:any = {
-    goal: [],
-    projPass: [],
-    tasks: [],
-    kafed: [],
-    conDep: [],
-    spinOf: [],
+    goal: ['12 goal'],
+    projPass: ['projPass'],
+    tasks: ['tasks'],
+    kafed: ['kafed'],
+    conDep: ['conDep'],
+    spinOf: ['spinOf'],
     mainData: {
       title: 'Loyiha nomini kirgizing?',
       owner: '"Kimyo texnologiya" fakulteti 72-21 elita guruh talabasi Jo‘rayev Javohir',
-      cost: '',
-      workplace: ''
+      cost: 'cost',
+      workplace: 'workplace'
     }
   }
 }

@@ -26,6 +26,6 @@ WORKDIR /projects/project_planning/api
 
 COPY --from=development /projects/project_planning/api/ .
 
-EXPOSE 3100
+EXPOSE 3000
 # run app
 CMD [ "node", "dist/main"]
