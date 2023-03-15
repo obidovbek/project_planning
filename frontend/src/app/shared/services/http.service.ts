@@ -18,9 +18,7 @@ export class HttpService {
 
     postProject(){
         return this.http.post(environment.http.post_project.path, 
-            { 
-              'data': 'data'
-            }
+            this.dataService.plan
         )       
     }
 

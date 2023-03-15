@@ -44,6 +44,7 @@
     "ngx-masonry": "^14.0.1",
     "ngx-masonry-gallery": "^4.0.0",
     "npm": "^9.2.0",
+    "prosemirror-dropcursor": "^1.7.1",
     "rxjs": "~7.5.0",
     "taiga-ui": "^3.15.0",
     "tslib": "^2.3.0",
