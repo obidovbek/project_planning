@@ -6,13 +6,13 @@ export type ProjectDocument = HydratedDocument<Project>;
 export class Project {
 
   @Prop() name: string;
-  @Prop() goal: Array<string>;
-  @Prop() projPass: Array<string>;
-  @Prop() tasks: Array<string>;
-  @Prop() kafed: Array<string>;
-  @Prop() conDep: Array<string>;
-  @Prop() spinOf: Array<string>;
-  @Prop() mainData: Array<string>;
+  @Prop({ type: Array }) goal;
+  @Prop({ type: Array }) projPass;
+  @Prop({ type: Array }) tasks;
+  @Prop({ type: Array }) kafed;
+  @Prop({ type: Array }) conDep;
+  @Prop({ type: Array }) spinOf;
+  @Prop({ type: Object }) mainData;
 
 
 }
