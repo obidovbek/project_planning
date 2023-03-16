@@ -6,6 +6,9 @@ export const environment = {
   http: {
     post_project:{
       path: url + 'projects/'
+    },
+    get_projects:{
+      path: url + 'projects/'
     }
   }
   // apiUrl: "https://apitt.ferpi.uz",

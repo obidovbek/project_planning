@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { DataService } from 'src/app/shared/services/data.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -20,6 +20,19 @@ export class HttpService {
         return this.http.post(environment.http.post_project.path, 
             this.dataService.plan
         )       
+    }
+        // // const pageSize = +request.query.pagesize;
+        // const currentPage = 1;
+        // // const currentPage = +request.query.page;
+        
+        // var reqFilters = [];
+        // // var reqFilters = JSON.parse(request.query.filters);
+    getProjects(currentPage:number, pagesize:number){
+      let params = new HttpParams()
+      .set('pagesize', pagesize)
+      .set('page', currentPage)
+      .set('filters', JSON.stringify([]));
+      return this.http.get(environment.http.get_projects.path, {params: params})       
     }
 
 

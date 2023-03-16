@@ -1,100 +1,158 @@
-<table
-    tuiTable
-    [columns]="columns"
->
-    <thead>
-        <tr tuiThGroup>
-            <th
-                *tuiHead="'name'"
-                tuiTh
+<tui-root>
+    <div class="template-user">
+        
+        <div class="template-user-header">
+            <div class="template-user-header-logo">
+                <img src="/assets/images/ferpi-logo.png" alt="">
+            </div>
+            <div class="template-user-header-content">
+            <tui-hosted-dropdown
+                #dropdown
+                [content]="content"
+                [(open)]="dropdownOpen"
             >
-                Name
-            </th>
-            <th
-                *tuiHead="'email'"
-                tuiTh
+                <tui-avatar
+                    text="Obidov Bekzod"
+                    class="tui-space_top-1"
+                ></tui-avatar>
+            </tui-hosted-dropdown>
+
+            </div>
+        </div>
+        <div class="template-user-wrap">
+            <tui-loader
+                [overlay]="true"
+                [showLoader]="!!(loading$ | async)"
             >
-                E-mail
-            </th>
-            <th
-                *tuiHead="'status'"
-                tuiTh
-            >
-                Status
-            </th>
-            <th
-                *tuiHead="'tags'"
-                tuiTh
-                [sorter]="null"
-            >
-                Tags
-            </th>
-            <th
-                *tuiHead="'actions'"
-                tuiTh
-                [sorter]="null"
-            ></th>
-        </tr>
-    </thead>
-    <tbody
-        *tuiLet="users | tuiTableSort as sortedUsers"
-        tuiTbody
-        [data]="sortedUsers"
-    >
-        <tr
-            *ngFor="let item of sortedUsers; let index = index"
-            tuiTr
-        >
-            <td
-                *tuiCell="'name'"
-                tuiTd
-            >
-                {{ index + 1 }}. {{ item.name }}
-            </td>
-            <td
-                *tuiCell="'email'"
-                tuiTd
-            >
-                <a
-                    *ngIf="item.email"
-                    tuiLink
-                    [href]="'mailto:' + item.email"
+                <table
+                    *ngIf="data$ | async as data"
+                    tuiTable
+                    class="table"
+                    [columns]="columns"
+                    [direction]="(direction$ | async) || 1"
+                    (directionChange)="direction$.next($event)"
                 >
-                    {{ item.email }}
-                </a>
-            </td>
-            <td
-                *tuiCell="'status'"
-                tuiTd
+                    <thead>
+                        <tr tuiThGroup>
+                            <th
+                                *tuiHead="'title'"
+                                tuiTh
+                            >
+                                Loyiha nomi
+                            </th>
+                            <th
+                                *tuiHead="'owner'"
+                                tuiTh
+                            >
+                                Loyiha tashabbuskori
+                            </th>
+                            <th
+                                *tuiHead="'actions'"
+                                tuiTh
+                                [sorter]="null"
+                            ></th>
+                        </tr>
+                    </thead>
+                    <tbody
+                        *tuiLet="data | tuiTableSort as sortedData"
+                        tuiTbody
+                        [data]="sortedData"
+                    >
+                        <tr
+                            *ngFor="let item of sortedData; let index = index"
+                            tuiTr
+                        >
+                            <td
+                                *tuiCell="'title'"
+                                tuiTd
+                            >
+                                {{ index + 1 }}. {{ item.mainData.title }}
+                            </td>
+                            <td
+                                *tuiCell="'owner'"
+                                tuiTd
+                            >
+                                {{ item.mainData.owner }}
+                            </td>
+                            <td
+                                *tuiCell="'actions'"
+                                tuiTd
+                            >
+                                <button
+                                    tuiIconButton
+                                    appearance="flat"
+                                    size="s"
+                                    icon="tuiIconTrash"
+                                    title="Rad etsih"
+                                    shape="rounded"
+                                    class="remove"
+                                    (click)="remove(item)"
+                                ></button>
+                                <button
+                                    tuiIconButton
+                                    appearance="flat"
+                                    size="s"
+                                    icon="tuiIconCheck"
+                                    title="Tasdiqlash"
+                                    shape="rounded"
+                                    class="check"
+                                    (click)="remove(item)"
+                                ></button>
+                                <button
+                                    tuiIconButton
+                                    appearance="flat"
+                                    size="s"
+                                    icon="tuiIconEyeLarge"
+                                    title="To‘liq ko‘rish"
+                                    shape="rounded"
+                                    class="watch"
+                                    (click)="remove(item)"
+                                ></button>
+                            </td> 
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td [colSpan]="columns.length">
+                                <tui-table-pagination
+                                    class="tui-space_top-2"
+                                    [total]="(total$ | async) || 0"
+                                    (pageChange)="onPage($event)"
+                                    (sizeChange)="onSize($event)"
+                                ></tui-table-pagination>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </tui-loader>
+            <!-- ////////////////////////////// -->
+
+        </div>
+
+    </div>
+</tui-root>
+
+
+<ng-template
+#content
+let-activeZone
+>
+    <div class="mn-profile">
+        <div>{{authService.userData.last_name}} {{authService.userData.first_name}} {{authService.userData.patronymic}}</div>
+        <div>{{authService.userData.email}}</div>
+        <div class="logout-wrap">
+            <button
+                tuiButton
+                type="button"
+                size="s"
+                appearance="primary"
+                class="tui-space_right-3 tui-space_bottom-3 logout"
+                (click)="logout()"
             >
-                <div [class]="item.status">{{ item.status }}</div>
-            </td>
-            <td
-                *tuiCell="'tags'"
-                tuiTd
-            >
-                <tui-tag
-                    *ngFor="let tag of item.tags"
-                    class="tui-space_right-1"
-                    [value]="tag"
-                    [autoColor]="true"
-                ></tui-tag>
-            </td>
-            <td
-                *tuiCell="'actions'"
-                tuiTd
-            >
-                <button
-                    tuiIconButton
-                    appearance="flat"
-                    size="s"
-                    icon="tuiIconTrash"
-                    title="Remove"
-                    shape="rounded"
-                    class="remove"
-                    (click)="remove(item)"
-                ></button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                chiqish
+            </button>
+        </div>
+
+    </div>
+
+</ng-template>

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, Body } from '@nestjs/common';
+import { Controller, Get, Post, Res, Body, Req, HttpStatus } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { Response } from 'express';
 import { Project } from './project.schema';
@@ -8,8 +8,9 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  getProjects() {
-    return this.projectsService.findAll();
+  async getProjects(@Req() request,  @Res() response) {
+    const projects = await this.projectsService.getProject(request);
+    return response.status(HttpStatus.OK).json(projects)
   }
   @Post()
   createProject(@Body() createProjectDto: Project) {
