@@ -29,8 +29,6 @@
                     tuiTable
                     class="table"
                     [columns]="columns"
-                    [direction]="(direction$ | async) || 1"
-                    (directionChange)="direction$.next($event)"
                 >
                     <thead>
                         <tr tuiThGroup>

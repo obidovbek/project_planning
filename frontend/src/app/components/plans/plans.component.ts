@@ -99,15 +99,16 @@ export class PlansComponent implements OnInit {
         this.authService.logout();
     }
     private readonly size$ = new BehaviorSubject(10);
-    private readonly page$ = new BehaviorSubject(1);
- 
-    readonly direction$ = new BehaviorSubject<-1 | 1>(-1);
-    readonly sorter$ = new BehaviorSubject<Key>('name');
- 
-    readonly minAge = new FormControl(21);
+    private readonly page$ = new BehaviorSubject(0);
  
     // readonly request$:any = this.httpService.getProjects(1, 5);
-    request$:any = this.httpService.getProjects(1, 10);
+    request$:any = combineLatest([
+        this.page$,
+        this.size$
+    ]).pipe(
+        // zero time debounce for a case when both key and direction change
+        switchMap(query => this.getData(...query).pipe(startWith(null))),
+    );
 
     initial: readonly string[] = ['title', 'owner', 'actions'];
  
@@ -115,13 +116,11 @@ export class PlansComponent implements OnInit {
  
     columns = ['title', 'owner', 'actions'];
  
-    search = '';
- 
     readonly arrow = TUI_ARROW;
  
     readonly loading$ = this.request$.pipe(map(value => !value));
  
-    readonly total$ = this.request$.pipe(map(({maxPosts}) => maxPosts));
+    readonly total$ = this.request$.pipe(map((data:any) => data?.maxPosts));
  
     readonly data$: Observable<readonly any[]> = this.request$.pipe(
         filter(tuiIsPresent),
@@ -129,64 +128,20 @@ export class PlansComponent implements OnInit {
         startWith([]),
     );
  
-    onEnabled(enabled: readonly string[]): void {
-        this.enabled = enabled;
-        this.columns = this.initial
-            .filter(column => enabled.includes(column))
-            .map(column => KEYS[column]);
-    }
- 
-    onDirection(direction: -1 | 1): void {
-        this.direction$.next(direction);
-    }
  
     onSize(size: number): void {
         this.size$.next(size);
     }
  
     onPage(page: number): void {
-        console.log('onPage', page)
-        this.request$ = this.httpService.getProjects((page + 1), 10).subscribe();
-        // this.page$.next(page);
+        this.page$.next(page);
     }
- 
-    isMatch(value: unknown): boolean {
-        return !!this.search && TUI_DEFAULT_MATCHER(value, this.search);
-    }
- 
-    // getAge(user: User): number {
-    //     return getAge(user);
-    // }
  
     private getData(
-        key: 'age' | 'dob' | 'name',
-        direction: -1 | 1,
         page: number,
         size: number,
-        minAge: number,
     ): Observable<any> {
-        console.info('Making a request');
- 
-        const start = page * size;
-        const end = start + size;
- 
-        // Imitating server response
-        return this.httpService.getProjects(1, 10);
+        return this.httpService.getProjects((page + 1), size);
     }
 }
  
-// function sortBy(key: 'age' | 'dob' | 'name', direction: -1 | 1): TuiComparator<User> {
-//     return (a, b) =>
-//         key === 'age'
-//             ? direction * tuiDefaultSort(getAge(a), getAge(b))
-//             : direction * tuiDefaultSort(a[key], b[key]);
-// }
- 
-// function getAge({dob}: User): number {
-//     const years = TODAY.year - dob.year;
-//     const months = TODAY.month - dob.month;
-//     const days = TODAY.day - dob.day;
-//     const offset = tuiToInt(months > 0 || (!months && days > 9));
- 
-//     return years + offset;
-// }

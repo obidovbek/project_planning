@@ -13,8 +13,8 @@ import { ConfigModule } from '@nestjs/config';
     }),
     UserModule,
     ConfigModule.forRoot(),
-    // MongooseModule.forRoot('mongodb://192.168.10.0:27017/project_planning')
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/project_planning'),
+    MongooseModule.forRoot('mongodb://192.168.10.0:27017/project_planning')
+    // MongooseModule.forRoot('mongodb://127.0.0.1:27017/project_planning'),
   ],
   controllers: [],
   providers: [],
