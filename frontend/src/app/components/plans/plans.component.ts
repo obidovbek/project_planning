@@ -107,18 +107,7 @@ export class PlansComponent implements OnInit {
     readonly minAge = new FormControl(21);
  
     // readonly request$:any = this.httpService.getProjects(1, 5);
-    readonly request$ = combineLatest([
-        this.sorter$,
-        this.direction$,
-        this.page$,
-        this.size$,
-        tuiControlValue<number>(this.minAge),
-    ]).pipe(
-        // zero time debounce for a case when both key and direction change
-        debounceTime(0),
-        switchMap(query => this.getData(...query).pipe(startWith(null))),
-        share(),
-    );
+    request$:any = this.httpService.getProjects(1, 10);
 
     initial: readonly string[] = ['title', 'owner', 'actions'];
  
@@ -157,7 +146,8 @@ export class PlansComponent implements OnInit {
  
     onPage(page: number): void {
         console.log('onPage', page)
-        this.page$.next(page);
+        this.request$ = this.httpService.getProjects((page + 1), 10).subscribe();
+        // this.page$.next(page);
     }
  
     isMatch(value: unknown): boolean {
