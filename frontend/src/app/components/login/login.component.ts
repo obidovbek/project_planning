@@ -27,6 +27,9 @@ export class LoginComponent implements OnInit {
     async login() {
         this.auth.login(this.loginForm.value).subscribe(res=>{
           this.router.navigateByUrl('/plans');
+        }, (error:any) => {
+          console.log(error)
+            alert(error.message);
         })
     }
     createLoginForm() {

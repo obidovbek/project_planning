@@ -23,11 +23,12 @@ export class AuthGuard implements CanActivate {
     return this.authService.user.pipe(
       take(1),
       map(user => {
+        console.log(user)
         if (!user) {
           this.router.navigateByUrl('/admin');
           return false;
         } else {
-          let role = user['roles']['tiil'];
+          const role = user['roles'][0];
           if (role === expectedRole) {
             return true;
           } else if( role === "ADMIN") {

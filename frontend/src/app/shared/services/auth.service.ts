@@ -9,14 +9,14 @@ import { AuthData, UserLogin } from "src/app/shared/models/auth-data.model";
 import { Observable } from 'rxjs';
 import { map,catchError  } from 'rxjs/operators';
 
-const BACKEND_URL = environment.apiUrl + "/user";
+// const BACKEND_URL:any = environment.apiUrl;
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
   private isAuthenticated = false;
   private token: string = '';
   private tokenTimer: any;
-  private userId: string = '';
+  private roles: string = '';
   private authStatusListener = new Subject<boolean>();
 
   user: Observable<any> = new Observable(res=>{res.next(null)});////
@@ -45,8 +45,8 @@ export class AuthService {
     return this.isAuthenticated;
   }
 
-  getUserId() {
-    return this.userId;
+  getroles() {
+    return this.roles;
   }
 
   getAuthStatusListener() {
@@ -54,37 +54,37 @@ export class AuthService {
   }
 
   createUser(authData: AuthData) {
-    return this.http.post(BACKEND_URL + "/signup", authData)
+    return this.http.post(environment.http.login.path, authData)
   }
 
   login(authData: UserLogin): Observable<any> {
     // const authData: AuthData = { email: email, password: password };
     return this.user = this.http
-      .post<{ token: string; expiresIn: number; userId: string, user: AuthData }>(
-        BACKEND_URL + "/login",
+      .post<{ token: string; expiresIn: number; roles: string[], user: AuthData }>(
+        environment.http.login.path,
         authData
       )
       .pipe(
         map((response:any) => {
           console.log('login response', response)
           const token = response.token;
-          this.userData = response.user;
+          // this.userData = response.user;
           this.token = token;
           if (token) {
-            const expiresInDuration = response.expiresIn;
+            const expiresInDuration = 86400;
             this.setAuthTimer(expiresInDuration);
             this.isAuthenticated = true;
-            this.userId = response.userId;
+            this.roles = response.roles;
             this.authStatusListener.next(true);
             const now = new Date();
             const expirationDate = new Date(
               now.getTime() + expiresInDuration * 1000
             );
-            this.saveAuthData(token, expirationDate, this.userId);
+            this.saveAuthData(token, expirationDate, this.roles);
           }else{
             alert(response.message);
           }
-          return response.user;
+          return {roles: response.roles};
         }, (error:any) => {
           this.authStatusListener.next(false);
           console.error(error)
@@ -95,6 +95,7 @@ export class AuthService {
   autoAuthUser(): Observable<any> {
 
     const authInformation = this.getAuthData();
+    console.log('authInformation',authInformation)
     if (!authInformation) {
       return new Observable(ob=>{ob.next(null)});
     }
@@ -102,35 +103,15 @@ export class AuthService {
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
     if (expiresIn > 0) {
         this.token = authInformation.token;
-        return this.user = this.http
-        .post<{ token: string; expiresIn: number; userId: string, user: AuthData }>(
-          BACKEND_URL + "/autologin",
-          {token: this.token}
-        ).pipe(
-          map((response:any)=>{
-              this.userData = response.user;
-              const token = response.token;
-              this.token = token;
-              if (token) {
-                const expiresInDuration = response.expiresIn;
-                this.setAuthTimer(expiresInDuration);
-                this.isAuthenticated = true;
-                this.userId = response.userId;
-                this.authStatusListener.next(true);
-                const now = new Date();
-                const expirationDate = new Date(
-                  now.getTime() + expiresInDuration * 1000
-                );
-                this.saveAuthData(token, expirationDate, this.userId);
-              }
-              return response.user;
-          }),
-          catchError(this.errorHandler)
-        )
-    //   this.isAuthenticated = true;
-    //   this.userId = authInformation.userId;
-    //   this.setAuthTimer(expiresIn / 1000);
-    //   this.authStatusListener.next(true);
+        return this.user = new Observable(ob => {
+          if (authInformation.token) {
+            this.token = authInformation.token;
+            this.isAuthenticated = true;
+            this.roles = JSON.parse(authInformation.roles?authInformation.roles:'');
+            this.authStatusListener.next(true);
+            ob.next({roles:this.roles});
+          }else{ob.next(null);}
+        })
     }else{
       return new Observable(ob=>{ob.next(null)});;
     }
@@ -142,7 +123,7 @@ export class AuthService {
     this.token = '';
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
-    this.userId = '';
+    this.roles = '';
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     // setTimeout(()=>{this.router.navigate(["/auth/login"]);})
@@ -156,29 +137,29 @@ export class AuthService {
     }, duration * 1000);
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string) {
+  private saveAuthData(token: string, expirationDate: Date, roles: string) {
     localStorage.setItem("token", token);
     localStorage.setItem("expiration", expirationDate.toISOString());
-    localStorage.setItem("userId", userId);
+    localStorage.setItem("roles", JSON.stringify(roles));
   }
 
   private clearAuthData() {
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");
-    localStorage.removeItem("userId");
+    localStorage.removeItem("roles");
   }
 
   private getAuthData() {
     const token = localStorage.getItem("token");
     const expirationDate = localStorage.getItem("expiration");
-    const userId = localStorage.getItem("userId");
+    const roles = localStorage.getItem("roles");
     if (!token || !expirationDate) {
       return;
     }
     return {
       token: token,
       expirationDate: new Date(expirationDate),
-      userId: userId
+      roles: roles
     };
   }
 }

@@ -9,7 +9,7 @@ export class AppComponent {
   title = 'project_planning';
   constructor(private authService:AuthService){}
   ngOnInit() {
-    this.authService.autoAuthUser().subscribe(()=>{},error=>{
+    this.authService.autoAuthUser().subscribe(()=>{console.log('autoAuthUser')},error=>{
       console.log('autoAuthUser error', error)
     })
   }
