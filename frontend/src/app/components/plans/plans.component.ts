@@ -2,8 +2,8 @@ import {tuiAvatarOptionsProvider} from '@taiga-ui/kit';
 import {TuiDialogService, TuiSizeL, TuiSizeS} from '@taiga-ui/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { HttpService } from 'src/app/shared/services/http.service';
+import {FormControl, FormGroup} from '@angular/forms';
 import {ChangeDetectionStrategy, Component, OnInit, Inject} from '@angular/core';
-import {FormControl} from '@angular/forms';
 import {TuiComparator, tuiDefaultSort} from '@taiga-ui/addon-table';
 import {
     TUI_DEFAULT_MATCHER,
@@ -21,46 +21,8 @@ interface User {
     readonly dob: TuiDay;
 }
  
-const TODAY = TuiDay.currentLocal();
-const FIRST = [
-    'John',
-    'Jane',
-    'Jack',
-    'Jill',
-    'James',
-    'Joan',
-    'Jim',
-    'Julia',
-    'Joe',
-    'Julia',
-];
- 
-const LAST = [
-    'Smith',
-    'West',
-    'Brown',
-    'Jones',
-    'Davis',
-    'Miller',
-    'Johnson',
-    'Jackson',
-    'Williams',
-    'Wilson',
-];
- 
-type Key = 'age' | 'dob' | 'name';
- 
-const DATA: readonly User[] = Array.from({length: 300}, () => ({
-    name: `${LAST[Math.floor(Math.random() * 10)]}, ${
-        FIRST[Math.floor(Math.random() * 10)]
-    }`,
-    dob: TODAY.append({day: -Math.floor(Math.random() * 4000) - 7500}),
-}));
-const KEYS: Record<string, Key> = {
-    Name: 'name',
-    Age: 'age',
-    'Date of Birth': 'dob',
-};
+
+
 
 @Component({
   selector: 'app-plans',
@@ -87,7 +49,21 @@ export class PlansComponent implements OnInit {
     ) {}
     ngOnInit(): void {
     }
+    readonly form = new FormGroup({
+        balance: new FormControl(0),
+    });
+ 
 
+ 
+    readonly filter = (item: number, value: number): boolean => item >= value;
+ 
+    onToggle(enabled: boolean): void {
+        if (enabled) {
+            this.form.enable();
+        } else {
+            this.form.disable();
+        }
+    }
     selectOption(item: string): void {
         this.dropdownOpen = false;
         this.dialogService.open(`You selected ${item}`).subscribe();

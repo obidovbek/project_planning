@@ -20,6 +20,27 @@
             </div>
         </div>
         <div class="template-user-wrap">
+            <form
+                class="form"
+                [formGroup]="form"
+            >
+                <tui-input-number
+                    tuiTableFilter="balance"
+                    formControlName="balance"
+                    class="control"
+                    [tuiGenericFilter]="filter"
+                >
+                    Minimal balance
+                </tui-input-number>
+                <label>
+                    <tui-toggle
+                        [ngModelOptions]="{standalone: true}"
+                        [ngModel]="form.enabled"
+                        (ngModelChange)="onToggle($event)"
+                    ></tui-toggle>
+                    Enable filtering
+                </label>
+            </form>
             <tui-loader
                 [overlay]="true"
                 [showLoader]="!!(loading$ | async)"
