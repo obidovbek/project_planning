@@ -12,6 +12,9 @@ export const environment = {
     },
     login:{
       path: url + 'auth/login/'
+    },
+    autologin:{
+      path: url + 'users/autologin/'
     }
   }
   // apiUrl: "https://apitt.ferpi.uz",

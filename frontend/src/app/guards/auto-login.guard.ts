@@ -17,9 +17,7 @@ export class AutoLoginGuard implements CanActivate {
     return this.authService.user.pipe(
       take(1),
       map(user => {
-        console.log(user)
-            return false;
-            if (!user) {
+        if (!user) {
           return true;
         } else {
           const role = user['roles'][0];

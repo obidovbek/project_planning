@@ -25,6 +25,15 @@ export class UsersService {
         return users;
     }
 
+
+    async getUser(email: string) {
+        const user = await this.userRepository.findOne({where: {email}, include: {all: true}})
+        return {
+            email: user.email,
+            roles: user.roles.map(r=>r.value)
+        };
+    }
+
     async getUserByEmail(email: string) {
         const user = await this.userRepository.findOne({where: {email}, include: {all: true}})
         return user;

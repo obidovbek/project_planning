@@ -8,7 +8,7 @@ import { AuthData, UserLogin } from "src/app/shared/models/auth-data.model";
 
 import { Observable } from 'rxjs';
 import { map,catchError  } from 'rxjs/operators';
-
+import { HttpService } from "./http.service";
 // const BACKEND_URL:any = environment.apiUrl;
 
 @Injectable({ providedIn: "root" })
@@ -32,7 +32,11 @@ export class AuthService {
 
   user_sec:any = {token: ''};
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient, 
+    private router: Router,
+    private HttpService: HttpService  
+  ) {
     this.user_sec.token = "VTnx0AHUciaEMrjipFGTcElDBSg1";
 
   }
@@ -103,15 +107,31 @@ export class AuthService {
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
     if (expiresIn > 0) {
         this.token = authInformation.token;
-        return this.user = new Observable(ob => {
-          if (authInformation.token) {
-            this.token = authInformation.token;
-            this.isAuthenticated = true;
-            this.roles = JSON.parse(authInformation.roles?authInformation.roles:'');
-            this.authStatusListener.next(true);
-            ob.next({roles:this.roles});
-          }else{ob.next(null);}
-        })
+        return this.user = this.HttpService.autoLogin(this.token)
+        .pipe(
+          map((response:any) => {
+            console.log('login response', response)
+            // const token = response.token;
+            // this.token = token;
+            // if (token) {
+              // const expiresInDuration = 86400;
+              // this.setAuthTimer(expiresInDuration);
+              this.isAuthenticated = true;
+              this.authStatusListener.next(true);
+            //   const now = new Date();
+            //   const expirationDate = new Date(
+            //     now.getTime() + expiresInDuration * 1000
+            //   );
+            //   this.saveAuthData(token, expirationDate, this.roles);
+            // }else{
+            //   alert(response.message);
+            // }
+            return {roles: response.roles};
+          }, (error:any) => {
+             this.authStatusListener.next(false);
+              console.error(error)
+           }) 
+        )
     }else{
       return new Observable(ob=>{ob.next(null)});;
     }
