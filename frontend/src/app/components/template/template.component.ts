@@ -18,6 +18,7 @@ import {
   import {AbstractControl, FormControl, ValidatorFn} from '@angular/forms';
   import {TuiValidationError} from '@taiga-ui/cdk';
   import {TuiFileLike} from '@taiga-ui/kit';
+  import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-template',
@@ -28,7 +29,9 @@ export class TemplateComponent implements OnInit {
     
 	readonly controlFirstCollImages = new FormControl([], [maxFilesLength(5)]);
 	readonly controlMiddleCollImages = new FormControl([], [maxFilesLength(5)]);
-    
+	formGroup: FormGroup;
+	// arr: FormArray;
+	
 	rejectedFiles: readonly TuiFileLike[] = [];
 
 	private readonly dialog = this.dialogService.open<boolean>(
@@ -39,8 +42,19 @@ export class TemplateComponent implements OnInit {
 		@Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
 		@Inject(Injector) private readonly injector: Injector,
 		public dataService:DataService,
-		public httpService:HttpService
-	) {}	
+		public httpService:HttpService,
+		private fb: FormBuilder
+	) {
+		this.formGroup = this.fb.group({
+			goal: [],
+			projPass: [],
+			tasks: [],
+			kafed: [],
+			conDep: [],
+			spinOf: [],
+			mainData: {},
+		});
+	}	
 
     f_A = {faUser, faMoneyBill, faPeopleGroup}
 	masonryImages:any[] = [];
@@ -51,6 +65,7 @@ export class TemplateComponent implements OnInit {
     ngOnInit(): void {
 		this.controlFirstCollImages.statusChanges.subscribe(response => { this.addImageFirstColl(); });
 		this.controlMiddleCollImages.statusChanges.subscribe(response => { this.addImageMiddleColl(); });
+
     }
 
 	public masonryOptionsImages: NgxMasonryOptions = {
@@ -93,10 +108,12 @@ export class TemplateComponent implements OnInit {
 		});
 	}
 	postProject(){
-		this.httpService.postProject()
-		.subscribe(res=>{
-			console.log('postProject', res)
-		})
+		this.formGroup.setValue(this.dataService.plan);
+		console.log('postProject', this.formGroup.value)
+		// this.httpService.postProject()
+		// .subscribe(res=>{
+		// 	console.log('postProject', res)
+		// })
 	}
 	addItem(type:string, value:any){
 		if(!value){return;}
@@ -122,6 +139,30 @@ export class TemplateComponent implements OnInit {
 			case 'spinOf': this.dataService.plan.spinOf.splice(index, 1); break;
 		}
 	}
+	// https://stackblitz.com/edit/angular-form-group-form-array-dynamic?file=src%2Fapp%2Fapp.component.ts
+	// get f() {
+	// 	return this.formGroup.controls;
+	//   }
+	
+	//   createItem() {
+	// 	return this.fb.group({
+	// 	  name: ['', Validators.required]
+	// 	});
+	//   }
+	
+	//   addItem() {
+	// 	this.arr = this.f['arr'] as FormArray;
+	// 	this.arr.push(this.createItem());
+	//   }
+	
+	//   removeItem(idx: number): void {
+	// 	(this.f['arr'] as FormArray).removeAt(idx);
+	//   }
+	
+	//   onSubmit() {
+	// 	this.formGroup.markAllAsTouched();
+	// 	console.log(this.formGroup.value);
+	//   }
 }
 
 

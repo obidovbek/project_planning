@@ -5,7 +5,7 @@ export const environment = {
   apiUrl: "http://localhost:5000",
   http: {
     post_project:{
-      path: url + 'projects/'
+      path: url + 'posts/'
     },
     get_projects:{
       path: url + 'projects/'

@@ -20,28 +20,28 @@ export class Post extends Model<Post, PostCreationAttrs> {
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
     id: number;
 
-    @Column({type: 'varchar', allowNull: false})
+    @Column({type: DataType.ARRAY(DataType.STRING)})
     goal: string[];
     
-    @Column({type: 'varchar', allowNull: false})
+    @Column({type: DataType.ARRAY(DataType.STRING)})
     projPass: string[];
     
-    @Column({type: 'varchar', allowNull: false})
+    @Column({type: DataType.ARRAY(DataType.STRING)})
     tasks: string[];
     
-    @Column({type: 'varchar', allowNull: false})
+    @Column({type: DataType.ARRAY(DataType.STRING)})
     kafed: string[];
     
-    @Column({type: 'varchar', allowNull: false})
+    @Column({type: DataType.ARRAY(DataType.STRING)})
     content: string[];
     
-    @Column({type: 'varchar', allowNull: false})
+    @Column({type: DataType.ARRAY(DataType.STRING)})
     conDep: string[];
         
-    @Column({type: 'varchar', allowNull: false})
+    @Column({type: DataType.ARRAY(DataType.STRING)})
     spinOf: string[];
         
-    @Column({type: 'varchar', allowNull: false})
+    @Column({type: 'varchar'})
     mainData: object;
 
 
