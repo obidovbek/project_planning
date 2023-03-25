@@ -5,14 +5,19 @@ import {UserRoles} from "../roles/user-roles.model";
 import {User} from "../users/users.model";
 
 interface PostCreationAttrs {
-    readonly goal: string[];
-    readonly projPass: string[];
-    readonly tasks: string[];
-    readonly kafed: string[];
-    readonly content: string[];
-    readonly conDep: string[];
-    readonly spinOf: string[];
-    readonly mainData: Object;
+    goal: string[];
+    projPass: string[];
+    tasks: string[];
+    kafed: string[];
+    conDep: string[];
+    spinOf: string[];
+    mainData: Object;
+    firstCollImages: string[];
+    middleCollImages: string[];
+    title: string;
+    owner: string;
+    cost: string;
+    workplace: string;
 }
 
 @Table({tableName: 'posts'})
@@ -33,9 +38,6 @@ export class Post extends Model<Post, PostCreationAttrs> {
     kafed: string[];
     
     @Column({type: DataType.ARRAY(DataType.STRING)})
-    content: string[];
-    
-    @Column({type: DataType.ARRAY(DataType.STRING)})
     conDep: string[];
         
     @Column({type: DataType.ARRAY(DataType.STRING)})
@@ -44,5 +46,22 @@ export class Post extends Model<Post, PostCreationAttrs> {
     @Column({type: 'varchar'})
     mainData: object;
 
+    @Column({type: DataType.ARRAY(DataType.STRING)})
+    firstCollImages: string[];
+
+    @Column({type: DataType.ARRAY(DataType.STRING)})
+    middleCollImages: string[];
+
+    @Column({type: DataType.STRING})
+    title: string;
+    
+    @Column({type: DataType.STRING})
+    owner: string;
+    
+    @Column({type: DataType.STRING})
+    cost: string;
+
+    @Column({type: DataType.STRING})
+    workplace: string;
 
 }
