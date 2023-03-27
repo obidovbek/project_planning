@@ -156,12 +156,12 @@
                     <tui-input-files
                         accept="image/*"
                         [multiple]="true"
-                        [formControl]="controlFirstCollImages"
-                        (ngModelChange)="controlFirstCollImages.markAsTouched()"
+                        [formControl]="firstCollImages"
+                        (ngModelChange)="firstCollImages.markAsTouched()"
                     ></tui-input-files>
                     
                     <tui-error
-                        [formControl]="controlFirstCollImages"
+                        [formControl]="firstCollImages"
                         [error]="['maxLength'] | tuiFieldError | async"
                     ></tui-error>
                 </div>
@@ -226,12 +226,12 @@
                     <tui-input-files
                         accept="image/*"
                         [multiple]="true"
-                        [formControl]="controlMiddleCollImages"
-                        (ngModelChange)="controlMiddleCollImages.markAsTouched()"
+                        [formControl]="middleCollImages"
+                        (ngModelChange)="middleCollImages.markAsTouched()"
                     ></tui-input-files>
                     
                     <tui-error
-                        [formControl]="controlMiddleCollImages"
+                        [formControl]="middleCollImages"
                         [error]="['maxLength'] | tuiFieldError | async"
                     ></tui-error>
                 </div>

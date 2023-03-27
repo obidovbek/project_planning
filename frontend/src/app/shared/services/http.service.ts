@@ -14,9 +14,9 @@ export class HttpService {
     ) { }
 
 
-    postProject(){
+    postProject(post:any){
         return this.http.post(environment.http.post_project.path, 
-            this.dataService.plan
+            post
         )       
     }
         // // const pageSize = +request.query.pagesize;

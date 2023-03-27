@@ -21,17 +21,14 @@ import {
   import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-template',
-  templateUrl: './template.component.html',
-  styleUrls: ['./template.component.scss'],
+  selector: 'app-template',de
 })
 export class TemplateComponent implements OnInit {
     
-	readonly controlFirstCollImages = new FormControl([], [maxFilesLength(5)]);
-	readonly controlMiddleCollImages = new FormControl([], [maxFilesLength(5)]);
-	formGroup: FormGroup;
+	readonly firstCollImages = new FormControl([], [maxFilesLength(5)]);
+	readonly middleCollImages = new FormControl([], [maxFilesLength(5)]);
 	// arr: FormArray;
-	
+
 	rejectedFiles: readonly TuiFileLike[] = [];
 
 	private readonly dialog = this.dialogService.open<boolean>(
@@ -45,15 +42,17 @@ export class TemplateComponent implements OnInit {
 		public httpService:HttpService,
 		private fb: FormBuilder
 	) {
-		this.formGroup = this.fb.group({
-			goal: [],
-			projPass: [],
-			tasks: [],
-			kafed: [],
-			conDep: [],
-			spinOf: [],
-			mainData: {},
-		});
+		// this.formGroup = this.fb.group({
+		// 	goal: [],
+		// 	projPass: [],
+		// 	tasks: [],
+		// 	kafed: [],
+		// 	conDep: [],
+		// 	spinOf: [],
+		// 	mainData: {},
+		// 	firstCollImages:  new FormControl([], [maxFilesLength(5)]),
+		// 	middleCollImages: new FormControl([], [maxFilesLength(5)]),
+		// });
 	}	
 
     f_A = {faUser, faMoneyBill, faPeopleGroup}
@@ -63,8 +62,8 @@ export class TemplateComponent implements OnInit {
 		middleCol: [],
 	}
     ngOnInit(): void {
-		this.controlFirstCollImages.statusChanges.subscribe(response => { this.addImageFirstColl(); });
-		this.controlMiddleCollImages.statusChanges.subscribe(response => { this.addImageMiddleColl(); });
+		this.firstCollImages.statusChanges.subscribe(response => { this.addImageFirstColl(); });
+		this.middleCollImages.statusChanges.subscribe(response => { this.addImageMiddleColl(); });
 
     }
 
@@ -76,7 +75,7 @@ export class TemplateComponent implements OnInit {
 	};
 
     addImageFirstColl(){
-		this.controlFirstCollImages.value?.map((file, index, a)=>{
+		this.firstCollImages.value?.map((file, index, a)=>{
 			console.log('addImageFirstColl')
 			if(index + 1 === a.length){
 				const reader = new FileReader();
@@ -88,7 +87,7 @@ export class TemplateComponent implements OnInit {
 
     addImageMiddleColl(){
 			console.log('addImageMiddleColl')
-		this.controlMiddleCollImages.value?.map((file, index, a)=>{
+		this.middleCollImages.value?.map((file, index, a)=>{
 			if(index + 1 === a.length){
 				const reader = new FileReader();
 				reader.readAsDataURL(file); 
@@ -108,9 +107,37 @@ export class TemplateComponent implements OnInit {
 		});
 	}
 	postProject(){
-		this.formGroup.setValue(this.dataService.plan);
-		console.log('postProject', this.formGroup.value)
-		// this.httpService.postProject()
+		var formData = new FormData();
+
+		this.dataService.plan.goal.map((item:any) => {
+			formData.append('goal', item.toString());
+		})
+		this.dataService.plan.projPass.map((item:any) => {
+			formData.append('projPass', item.toString());
+		})
+		this.dataService.plan.tasks.map((item:any) => {
+			formData.append('tasks', item.toString());
+		})
+		this.dataService.plan.kafed.map((item:any) => {
+			formData.append('kafed', item.toString());
+		})
+		this.dataService.plan.conDep.map((item:any) => {
+			formData.append('conDep', item.toString());
+		})
+		this.dataService.plan.spinOf.map((item:any) => {
+			formData.append('spinOf', item.toString());
+		})
+		for (let key in this.dataService.plan.mainData) {
+			formData.append(key, this.dataService.plan.mainData[key]);
+		  }
+		for (var i = 0; i < this.firstCollImages.value?.length; i++) { 
+			formData.append("firstCollImages", this.images.firstCol[i]);
+		}
+		for (var i = 0; i < this.images.middleCol?.length; i++) { 
+			formData.append("middleCollImages", this.images.middleCol[i]);
+		}
+		console.log('postProject', this.firstCollImages.value)
+		// this.httpService.postProject(formData)
 		// .subscribe(res=>{
 		// 	console.log('postProject', res)
 		// })
