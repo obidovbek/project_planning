@@ -10,11 +10,18 @@ export class PostsService {
     constructor(@InjectModel(Post) private postRepository: typeof Post,
                 private fileService: FilesService) {}
 
-    async create(dto: any) {
-        // const fileName = await this.fileService.createFile(image);
-        console.log('createPost 1', dto)
-        const post = await this.postRepository.create(dto)
-        return post;
+    async create(dto: any, images: any) {
+        let firstCollImages = [];
+        let middleCollImages = [];
+        const file = await this.fileService.createFile(images.firstCollImages[0])
+        // await images.firstCollImages?.map(async (image) => { firstCollImages.push(await this.fileService.createFile(image))});
+        // await images.middleCollImages?.map(async (image) => { middleCollImages.push(await this.fileService.createFile(image))});
+        // console.log('createPost images', dto, firstCollImages, middleCollImages)
+        // const post = await this.postRepository.create({...dto, firstCollImages, middleCollImages});
+        // console.log('createPost file', file)
+        console.log('createPost images', images.firstCollImages[0])
+        console.log('createPost', {...dto, firstCollImages, middleCollImages})
+        return 1234;
     }
     async delete(){
         return this.postRepository.destroy({ truncate: true })

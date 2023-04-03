@@ -19,11 +19,8 @@ export class PostsController {
         { name: 'middleCollImages', maxCount: 5 },
       ]))
     
-    createPost(@Body() dto: CreatePostDto, @UploadedFiles() files: { firstCollImages?: Express.Multer.File[], middleCollImages?: Express.Multer.File[] }) {
-        console.log('files', files)
-        console.log('createPost', dto)
-        return '123'
-        // return this.postService.create(dto)
+    createPost(@Body() dto: CreatePostDto, @UploadedFiles() images: { firstCollImages?: Express.Multer.File[], middleCollImages?: Express.Multer.File[] }) {
+        return this.postService.create(dto,images)
     }
 
     @Delete()

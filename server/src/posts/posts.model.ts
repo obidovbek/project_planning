@@ -11,7 +11,6 @@ interface PostCreationAttrs {
     kafed: string[];
     conDep: string[];
     spinOf: string[];
-    mainData: Object;
     firstCollImages: string[];
     middleCollImages: string[];
     title: string;
@@ -42,9 +41,6 @@ export class Post extends Model<Post, PostCreationAttrs> {
         
     @Column({type: DataType.ARRAY(DataType.STRING)})
     spinOf: string[];
-        
-    @Column({type: 'varchar'})
-    mainData: object;
 
     @Column({type: DataType.ARRAY(DataType.STRING)})
     firstCollImages: string[];

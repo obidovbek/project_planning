@@ -5,7 +5,6 @@ export class CreatePostDto {
     readonly kafed: string[];
     readonly conDep: string[];
     readonly spinOf: string[];
-    readonly mainData: Object;
     readonly title: string;
     readonly owner: string;
     readonly cost: string;

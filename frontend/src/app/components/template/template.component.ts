@@ -21,7 +21,9 @@ import {
   import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-template',de
+	selector: 'app-template',
+	templateUrl: './template.component.html',
+	styleUrls: ['./template.component.scss']
 })
 export class TemplateComponent implements OnInit {
     
@@ -108,7 +110,8 @@ export class TemplateComponent implements OnInit {
 	}
 	postProject(){
 		var formData = new FormData();
-
+		const firstCol:any = this.firstCollImages.value;
+		const middCol:any = this.middleCollImages.value;
 		this.dataService.plan.goal.map((item:any) => {
 			formData.append('goal', item.toString());
 		})
@@ -130,17 +133,19 @@ export class TemplateComponent implements OnInit {
 		for (let key in this.dataService.plan.mainData) {
 			formData.append(key, this.dataService.plan.mainData[key]);
 		  }
-		for (var i = 0; i < this.firstCollImages.value?.length; i++) { 
-			formData.append("firstCollImages", this.images.firstCol[i]);
+		for (var i = 0; i < firstCol?.length; i++) { 
+			console.log('firstCol[i]', firstCol[i])
+			formData.append("firstCollImages", firstCol[i]);
 		}
-		for (var i = 0; i < this.images.middleCol?.length; i++) { 
-			formData.append("middleCollImages", this.images.middleCol[i]);
+		for (var i = 0; i < middCol?.length; i++) { 
+			formData.append("middleCollImages", middCol[i]);
 		}
-		console.log('postProject', this.firstCollImages.value)
-		// this.httpService.postProject(formData)
-		// .subscribe(res=>{
-		// 	console.log('postProject', res)
-		// })
+		// console.log('postProject', this.firstCollImages.value)
+		// console.log('formData firstCollImages', formData.get('firstCollImages'))
+		this.httpService.postProject(formData)
+		.subscribe(res=>{
+			console.log('postProject', res)
+		})
 	}
 	addItem(type:string, value:any){
 		if(!value){return;}
