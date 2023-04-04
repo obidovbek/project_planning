@@ -1,10 +1,10 @@
 export class CreatePostDto {
-    readonly goal: string[];
-    readonly projPass: string[];
-    readonly tasks: string[];
-    readonly kafed: string[];
-    readonly conDep: string[];
-    readonly spinOf: string[];
+    readonly goal: string[] | string;
+    readonly projPass: string[] | string;
+    readonly tasks: string[] | string; 
+    readonly kafed: string[] | string; 
+    readonly conDep: string[] | string; 
+    readonly spinOf: string[] | string; 
     readonly title: string;
     readonly owner: string;
     readonly cost: string;

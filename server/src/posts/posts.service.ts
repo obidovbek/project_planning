@@ -11,17 +11,27 @@ export class PostsService {
                 private fileService: FilesService) {}
 
     async create(dto: any, images: any) {
-        let firstCollImages = [];
-        let middleCollImages = [];
-        const file = await this.fileService.createFile(images.firstCollImages[0])
-        // await images.firstCollImages?.map(async (image) => { firstCollImages.push(await this.fileService.createFile(image))});
-        // await images.middleCollImages?.map(async (image) => { middleCollImages.push(await this.fileService.createFile(image))});
-        // console.log('createPost images', dto, firstCollImages, middleCollImages)
-        // const post = await this.postRepository.create({...dto, firstCollImages, middleCollImages});
-        // console.log('createPost file', file)
-        console.log('createPost images', images.firstCollImages[0])
-        console.log('createPost', {...dto, firstCollImages, middleCollImages})
-        return 1234;
+        let firstCollImages = images.firstCollImages?.map(image=>image.filename);
+        firstCollImages = firstCollImages&&firstCollImages.length?firstCollImages:[];
+        let middleCollImages = images.middleCollImages?.map(image=>image.filename);
+        middleCollImages = middleCollImages&&middleCollImages.length?middleCollImages:[];
+        // var randomNumber = Math.floor(Math.random() * 900000) + 100000;
+        const post = await this.postRepository.create(
+            {
+                generatedId:  Math.floor(Math.random() * 900000) + 100000,
+                goal: (typeof dto.goal === 'string')?[dto.goal]:dto.goal,
+                tasks: (typeof dto.tasks === 'string')?[dto.tasks]:dto.tasks,
+                kafed: (typeof dto.kafed === 'string')?[dto.kafed]:dto.kafed,
+                conDep: (typeof dto.conDep === 'string')?[dto.conDep]:dto.conDep,
+                spinOf: (typeof dto.spinOf === 'string')?[dto.spinOf]:dto.spinOf,
+                title: dto.title,
+                owner: dto.owner,
+                cost: dto.cost,
+                workplace: dto.workplace,
+                firstCollImages, 
+                middleCollImages
+        });
+        return post;
     }
     async delete(){
         return this.postRepository.destroy({ truncate: true })

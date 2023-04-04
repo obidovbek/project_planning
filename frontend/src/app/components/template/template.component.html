@@ -143,7 +143,7 @@
                                     class="tui-space_right-3 tui-space_bottom-3 m0 pat5r5"
                                     icon="tuiIconCloseLarge"
                                     [showLoader]="false"
-                                    (click)="images.firstCol.splice(idx, 1)"
+                                    (click)="removeItem('firstCol', idx)"
                                 ></button>
                             </div>
                         </div> 
@@ -213,7 +213,7 @@
                                     class="tui-space_right-3 tui-space_bottom-3 m0 pat5r5"
                                     icon="tuiIconCloseLarge"
                                     [showLoader]="false"
-                                    (click)="images.middleCol.splice(idx, 1)"
+                                    (click)="removeItem('middleCol', idx)"
                                 ></button>
                             </div>
                         </div> 
@@ -344,10 +344,25 @@
                 type="button"
                 appearance="primary"
                 class="tui-space_right-3 tui-space_bottom-3"
-                (click)="postProject()"
+                (click)="postProject(template)"
             >
                 Jo‘natish
             </button>
         </div>
     </div>
 </tui-root>
+<ng-template
+    #template
+    let-observer
+>
+    <h1>Loyihangiz mufavattiyatli jo‘natildi!</h1>
+    <h3>Loyiha e‘lon qilingan raqam: <span style="font-size: 20px; font-weight: 900;">{{generatedId}}</span></h3>
+    <button
+        tuiButton
+        type="button"
+        size="m"
+        (click)="completeTemplete(observer)"
+    >
+        OK
+    </button>
+</ng-template>

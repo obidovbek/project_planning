@@ -3,7 +3,7 @@ import { faUser, faMoneyBill, faPeopleGroup } from '@fortawesome/free-solid-svg-
 import { NgxMasonryOptions, NgxMasonryComponent } from "ngx-masonry";
 import { DataService } from 'src/app/shared/services/data.service';
 import { HttpService } from 'src/app/shared/services/http.service';
-
+import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -11,7 +11,7 @@ import {
 	Inject,
 	Injector
   } from '@angular/core';
-  import { TuiDialogService } from '@taiga-ui/core';
+  import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
   import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
   import { DialogComponent } from 'src/app/shared/components/taiga-ui/dialog/tui-dialog.component';
   
@@ -19,7 +19,7 @@ import {
   import {TuiValidationError} from '@taiga-ui/cdk';
   import {TuiFileLike} from '@taiga-ui/kit';
   import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+  import {  Router } from "@angular/router";
 @Component({
 	selector: 'app-template',
 	templateUrl: './template.component.html',
@@ -32,7 +32,7 @@ export class TemplateComponent implements OnInit {
 	// arr: FormArray;
 
 	rejectedFiles: readonly TuiFileLike[] = [];
-
+	generatedId:number = 0;
 	private readonly dialog = this.dialogService.open<boolean>(
 		new PolymorpheusComponent(DialogComponent, this.injector),
 		{ dismissible: true, label: 'Ma\'lumotni kirgizing?' }
@@ -42,7 +42,8 @@ export class TemplateComponent implements OnInit {
 		@Inject(Injector) private readonly injector: Injector,
 		public dataService:DataService,
 		public httpService:HttpService,
-		private fb: FormBuilder
+		private fb: FormBuilder,
+		private router: Router,
 	) {
 		// this.formGroup = this.fb.group({
 		// 	goal: [],
@@ -108,16 +109,16 @@ export class TemplateComponent implements OnInit {
 			}
 		});
 	}
-	postProject(){
+	postProject(content: PolymorpheusContent<TuiDialogContext>){
 		var formData = new FormData();
 		const firstCol:any = this.firstCollImages.value;
 		const middCol:any = this.middleCollImages.value;
 		this.dataService.plan.goal.map((item:any) => {
 			formData.append('goal', item.toString());
 		})
-		this.dataService.plan.projPass.map((item:any) => {
-			formData.append('projPass', item.toString());
-		})
+		// this.dataService.plan.projPass.map((item:any) => {
+		// 	formData.append('projPass', item.toString());
+		// })
 		this.dataService.plan.tasks.map((item:any) => {
 			formData.append('tasks', item.toString());
 		})
@@ -134,18 +135,25 @@ export class TemplateComponent implements OnInit {
 			formData.append(key, this.dataService.plan.mainData[key]);
 		  }
 		for (var i = 0; i < firstCol?.length; i++) { 
-			console.log('firstCol[i]', firstCol[i])
 			formData.append("firstCollImages", firstCol[i]);
 		}
 		for (var i = 0; i < middCol?.length; i++) { 
 			formData.append("middleCollImages", middCol[i]);
 		}
-		// console.log('postProject', this.firstCollImages.value)
-		// console.log('formData firstCollImages', formData.get('firstCollImages'))
 		this.httpService.postProject(formData)
-		.subscribe(res=>{
+		.subscribe(async (res:any)=>{
+			// this.showDialogMessage(res.generatedId);
 			console.log('postProject', res)
+			this.generatedId = res.generatedId;
+			await this.dialogService.open(content).subscribe();
 		})
+	}
+	showDialogMessage(content: PolymorpheusContent<TuiDialogContext>): void {
+        this.dialogService.open(content).subscribe();
+    }
+	completeTemplete(observer:any){
+		observer.complete()
+		this.router.navigateByUrl('/welcome')
 	}
 	addItem(type:string, value:any){
 		if(!value){return;}
@@ -169,6 +177,10 @@ export class TemplateComponent implements OnInit {
 			case 'kafed': this.dataService.plan.kafed.splice(index, 1); break;
 			case 'conDep': this.dataService.plan.conDep.splice(index, 1); break;
 			case 'spinOf': this.dataService.plan.spinOf.splice(index, 1); break;
+			case 'firstCol': this.images.firstCol.splice(index, 1);this.firstCollImages.value?.splice(index, 1); break;
+			case 'middleCol': this.images.middleCol.splice(index, 1);this.middleCollImages.value?.splice(index, 1); break;
+			
+			
 		}
 	}
 	// https://stackblitz.com/edit/angular-form-group-form-array-dynamic?file=src%2Fapp%2Fapp.component.ts
