@@ -3,7 +3,7 @@ import {TuiDialogService, TuiSizeL, TuiSizeS} from '@taiga-ui/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { HttpService } from 'src/app/shared/services/http.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {ChangeDetectionStrategy, Component, OnInit, Inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, Inject, TemplateRef} from '@angular/core';
 import {TuiComparator, tuiDefaultSort} from '@taiga-ui/addon-table';
 import {
     TUI_DEFAULT_MATCHER,
@@ -15,6 +15,8 @@ import {
 import {TUI_ARROW} from '@taiga-ui/kit';
 import {BehaviorSubject, combineLatest, Observable, timer} from 'rxjs';
 import {debounceTime, filter, map, share, startWith, switchMap} from 'rxjs/operators';
+import {tuiClamp,TuiDropdownPortalService} from '@taiga-ui/cdk';
+import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus';
 
 interface User {
     readonly name: string;
@@ -41,11 +43,14 @@ export class PlansComponent implements OnInit {
     dropdownOpen = false;
     size: TuiSizeL | TuiSizeS = 's';
     projects: any;
-
+    scale = 1;
+    filters = false;
     constructor(
         public authService:AuthService,
         public httpService:HttpService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+        @Inject(TuiDropdownPortalService)
+        private readonly portalService: TuiDropdownPortalService,
     ) {}
     ngOnInit(): void {
     }
@@ -53,8 +58,31 @@ export class PlansComponent implements OnInit {
         balance: new FormControl(0),
     });
  
-
+    get width(): string {
+        return `calc((100% + 4rem) * ${1 / this.scale})`;
+    }
  
+    onElastic(value: number): void {
+        this.scale = tuiClamp(value, 0.5, 1);
+    }
+    get transform(): string {
+        return `scale(${this.scale})`;
+    }
+
+    //TuiDialogSize = 's' | 'm' | 'l' | 'xl' | 'xxl' | 'full';
+    showFullPlan(
+        item: any,
+        content: PolymorpheusContent,
+    ): void {
+ 
+        this.dialogService.open(content, {size: 'l'}).subscribe({
+            complete: () => {
+            },
+        });
+    }
+
+
+
     readonly filter = (item: number, value: number): boolean => item >= value;
  
     onToggle(enabled: boolean): void {
@@ -96,7 +124,7 @@ export class PlansComponent implements OnInit {
  
     readonly loading$ = this.request$.pipe(map(value => !value));
  
-    readonly total$ = this.request$.pipe(map((data:any) => data?.maxPosts));
+    readonly total$ = this.request$.pipe(map((data:any) => data?.totalPosts));
  
     readonly data$: Observable<readonly any[]> = this.request$.pipe(
         filter(tuiIsPresent),

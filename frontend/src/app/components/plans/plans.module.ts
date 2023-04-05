@@ -8,6 +8,8 @@ import { ReactiveFormsModule  } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ALL_TAIGA_UI_MODULES } from 'src/app/shared/all-taigu-modules/all-taigu-modules.module';
 import { TuiTableFiltersDirective } from '@taiga-ui/addon-table';
+import { TemplateModule } from '../template/template.module';
+
 @NgModule({
   declarations: [
     PlansComponent,
@@ -18,6 +20,7 @@ import { TuiTableFiltersDirective } from '@taiga-ui/addon-table';
     FontAwesomeModule,
     InfiniteScrollModule,
     ReactiveFormsModule,
+    TemplateModule,
     SharedModule,
     ...ALL_TAIGA_UI_MODULES,
   ],

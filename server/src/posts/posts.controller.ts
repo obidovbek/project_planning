@@ -1,4 +1,4 @@
-import {Body, Controller, Post, Get, UploadedFiles, UseInterceptors, Delete} from '@nestjs/common';
+import {Body, Controller, Post, Get, UploadedFiles, UseInterceptors, Delete, Req, Res, HttpStatus} from '@nestjs/common';
 import {CreatePostDto} from "./dto/create-post.dto";
 import {PostsService} from "./posts.service";
 // import {FileInterceptor} from "@nestjs/platform-express";
@@ -46,7 +46,8 @@ export class PostsController {
     }
 
     @Get()
-    getAll(){
-        return this.postService.findAll();
+    async getAll(@Req() request,  @Res() response){
+        const findAndCountAll = await this.postService.findAndCountAll(request);
+        return response.status(HttpStatus.OK).json(findAndCountAll);
     }
 }

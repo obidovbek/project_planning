@@ -23,6 +23,7 @@ import { ALL_TAIGA_UI_MODULES } from 'src/app/shared/all-taigu-modules/all-taigu
     SharedModule,
     ...ALL_TAIGA_UI_MODULES,
   ],
+  exports: [TemplateComponent],
   providers: [
 
   ]

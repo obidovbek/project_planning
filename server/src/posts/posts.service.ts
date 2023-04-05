@@ -36,9 +36,22 @@ export class PostsService {
     async delete(){
         return this.postRepository.destroy({ truncate: true })
     }
-    async findAll(){
-        console.log('findAll')
-        const posts = await this.postRepository.findAll();
-        return posts;
+    async findAndCountAll(request: any){
+        const limit = +request.query.limit ? ((+request.query.limit <= 200)?(+request.query.limit):200) : 10;
+        const page = +request.query.page ? +request.query.page: 1;
+
+        const offset = limit * (page - 1);
+        const posts = await Post.findAndCountAll({
+          limit,
+          offset,
+          order: [['createdAt', 'DESC']],
+        });
+    
+        // const totalPages = Math.ceil(posts.count / limit);
+        return {
+          posts: posts.rows?.map(post=>post.dataValues),
+          currentPage: page,
+          totalPosts: posts.count,
+        };
     }
 }
