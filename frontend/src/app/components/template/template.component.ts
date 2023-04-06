@@ -9,7 +9,8 @@ import {
 	Component,
 	OnInit,
 	Inject,
-	Injector
+	Injector,
+	Input
   } from '@angular/core';
   import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
   import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
@@ -27,6 +28,8 @@ import {
 })
 export class TemplateComponent implements OnInit {
     
+	@Input() onlyView: boolean = false;
+	
 	readonly firstCollImages = new FormControl([], [maxFilesLength(5)]);
 	readonly middleCollImages = new FormControl([], [maxFilesLength(5)]);
 	// arr: FormArray;
@@ -45,17 +48,6 @@ export class TemplateComponent implements OnInit {
 		private fb: FormBuilder,
 		private router: Router,
 	) {
-		// this.formGroup = this.fb.group({
-		// 	goal: [],
-		// 	projPass: [],
-		// 	tasks: [],
-		// 	kafed: [],
-		// 	conDep: [],
-		// 	spinOf: [],
-		// 	mainData: {},
-		// 	firstCollImages:  new FormControl([], [maxFilesLength(5)]),
-		// 	middleCollImages: new FormControl([], [maxFilesLength(5)]),
-		// });
 	}	
 
     f_A = {faUser, faMoneyBill, faPeopleGroup}
@@ -65,6 +57,7 @@ export class TemplateComponent implements OnInit {
 		middleCol: [],
 	}
     ngOnInit(): void {
+		console.log('plan ', this.dataService.plan)
 		this.firstCollImages.statusChanges.subscribe(response => { this.addImageFirstColl(); });
 		this.middleCollImages.statusChanges.subscribe(response => { this.addImageMiddleColl(); });
 
@@ -116,9 +109,6 @@ export class TemplateComponent implements OnInit {
 		this.dataService.plan.goal.map((item:any) => {
 			formData.append('goal', item.toString());
 		})
-		// this.dataService.plan.projPass.map((item:any) => {
-		// 	formData.append('projPass', item.toString());
-		// })
 		this.dataService.plan.tasks.map((item:any) => {
 			formData.append('tasks', item.toString());
 		})
@@ -131,9 +121,12 @@ export class TemplateComponent implements OnInit {
 		this.dataService.plan.spinOf.map((item:any) => {
 			formData.append('spinOf', item.toString());
 		})
-		for (let key in this.dataService.plan.mainData) {
-			formData.append(key, this.dataService.plan.mainData[key]);
-		  }
+
+		formData.append("title", this.dataService.plan.title);
+		formData.append("owner", this.dataService.plan.owner);
+		formData.append("cost", this.dataService.plan.cost);
+		formData.append("workplace", this.dataService.plan.workplace);
+
 		for (var i = 0; i < firstCol?.length; i++) { 
 			formData.append("firstCollImages", firstCol[i]);
 		}
@@ -142,8 +135,6 @@ export class TemplateComponent implements OnInit {
 		}
 		this.httpService.postProject(formData)
 		.subscribe(async (res:any)=>{
-			// this.showDialogMessage(res.generatedId);
-			console.log('postProject', res)
 			this.generatedId = res.generatedId;
 			await this.dialogService.open(content).subscribe();
 		})
@@ -163,10 +154,10 @@ export class TemplateComponent implements OnInit {
 			case 'kafed': this.dataService.plan.kafed.push(value); break;
 			case 'conDep': this.dataService.plan.conDep.push(value); break;
 			case 'spinOf': this.dataService.plan.spinOf.push(value); break;
-			case 'title': this.dataService.plan.mainData.title = value; break;
-			case 'owner': this.dataService.plan.mainData.owner = value; break;
-			case 'cost': this.dataService.plan.mainData.cost = value; break;
-			case 'workplace': this.dataService.plan.mainData.workplace = value; break;
+			case 'title': this.dataService.plan.title = value; break;
+			case 'owner': this.dataService.plan.owner = value; break;
+			case 'cost': this.dataService.plan.cost = value; break;
+			case 'workplace': this.dataService.plan.workplace = value; break;
 		}
 	}
 
@@ -183,30 +174,6 @@ export class TemplateComponent implements OnInit {
 			
 		}
 	}
-	// https://stackblitz.com/edit/angular-form-group-form-array-dynamic?file=src%2Fapp%2Fapp.component.ts
-	// get f() {
-	// 	return this.formGroup.controls;
-	//   }
-	
-	//   createItem() {
-	// 	return this.fb.group({
-	// 	  name: ['', Validators.required]
-	// 	});
-	//   }
-	
-	//   addItem() {
-	// 	this.arr = this.f['arr'] as FormArray;
-	// 	this.arr.push(this.createItem());
-	//   }
-	
-	//   removeItem(idx: number): void {
-	// 	(this.f['arr'] as FormArray).removeAt(idx);
-	//   }
-	
-	//   onSubmit() {
-	// 	this.formGroup.markAllAsTouched();
-	// 	console.log(this.formGroup.value);
-	//   }
 }
 
 

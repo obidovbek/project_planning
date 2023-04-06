@@ -1,3 +1,4 @@
+<tui-root *ngIf="!onlyView">
     <div class="template-user">
         
         <div class="template-user-header">
@@ -17,7 +18,7 @@
                 <img src="/assets/images/ferpi-logo.png" alt="">
             </div>
             <div class="template-user-header-content">
-                <div>{{dataService.plan.mainData.title}}</div>
+                <div>{{dataService.plan.title}}</div>
                 <div style="margin-left: 5px;">
                     <button
                         tuiIconButton
@@ -74,7 +75,7 @@
                             <div class="proj_pass-title">Loyiha tashabbuskori:</div>
                             <div class="proj_pass-icon"><fa-icon [icon]="f_A.faUser"></fa-icon></div>
                             <div class="proj_pass-content">
-                                <div>{{dataService.plan.mainData.owner}}</div>
+                                <div>{{dataService.plan.owner}}</div>
                                 <div style="margin-left: 5px;">
                                     <button
                                         tuiIconButton
@@ -93,7 +94,7 @@
                             <div class="proj_pass-title">Loyiha qiymati (mln so‘m):</div>
                             <div class="proj_pass-icon"><fa-icon [icon]="f_A.faMoneyBill"></fa-icon></div>
                             <div class="proj_pass-content">
-                                <div>{{dataService.plan.mainData.cost}}</div>
+                                <div>{{dataService.plan.cost}}</div>
                                 <div style="margin-left: 5px;">
                                     <button
                                         tuiIconButton
@@ -112,7 +113,7 @@
                             <div class="proj_pass-title">Tashkil etilayotgan ish o‘rni:</div>
                             <div class="proj_pass-icon"><fa-icon [icon]="f_A.faPeopleGroup"></fa-icon></div>
                             <div class="proj_pass-content">
-                                <div>{{dataService.plan.mainData.workplace}}</div>
+                                <div>{{dataService.plan.workplace}}</div>
                                 <div style="margin-left: 5px;">
                                     <button
                                         tuiIconButton
@@ -349,18 +350,141 @@
             </button>
         </div>
     </div>
-<ng-template
-    #template
-    let-observer
->
-    <h1>Loyihangiz mufavattiyatli jo‘natildi!</h1>
-    <h3>Loyiha e‘lon qilingan raqam: <span style="font-size: 20px; font-weight: 900;">{{generatedId}}</span></h3>
-    <button
-        tuiButton
-        type="button"
-        size="m"
-        (click)="completeTemplete(observer)"
+    <ng-template
+        #template
+        let-observer
     >
-        OK
-    </button>
-</ng-template>
+        <h1>Loyihangiz mufavattiyatli jo‘natildi!</h1>
+        <h3>Loyiha e‘lon qilingan raqam: <span style="font-size: 20px; font-weight: 900;">{{generatedId}}</span></h3>
+        <button
+            tuiButton
+            type="button"
+            size="m"
+            (click)="completeTemplete(observer)"
+        >
+            OK
+        </button>
+    </ng-template>
+</tui-root>
+
+
+<div class="template-user" *ngIf="onlyView">
+        
+    <div class="template-user-header">
+        <div class="template-user-header-logo only-view">
+            <img src="/assets/images/ferpi-logo.png" alt="">
+        </div>
+        <div class="template-user-header-content">
+            <div>{{dataService.plan.title}}</div>
+        </div>
+    </div>
+    <div class="template-user-wrap">
+        <div class="template-user-wrap-col">
+            <div class="template-user-wrap-item border-1">
+                <div class="template-user-wrap-item-header bg-color-1">Maqsad</div>
+                <div class="template-user-wrap-item-body">
+                    <ul class="item-parts goal">
+                        <li *ngFor="let item of dataService.plan.goal; let idx = index;">
+                            {{item}}
+                        </li>
+                    </ul>
+                    <div *ngIf="!dataService.plan.goal || !dataService.plan.goal.length" class="empty-item bg-trp-1">Yo‘q</div>
+                </div>
+            </div>
+            <div class="template-user-wrap-item border-1">
+                <div class="template-user-wrap-item-header bg-color-1">Loyiha pasporti</div>
+                <div class="template-user-wrap-item-body">
+                    <div class="proj_pass">
+                        <div class="proj_pass-title">Loyiha tashabbuskori:</div>
+                        <div class="proj_pass-icon"><fa-icon [icon]="f_A.faUser"></fa-icon></div>
+                        <div class="proj_pass-content">
+                            <div>{{dataService.plan.owner}}</div>
+                            <div style="margin-left: 5px;">
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="proj_pass">
+                        <div class="proj_pass-title">Loyiha qiymati (mln so‘m):</div>
+                        <div class="proj_pass-icon"><fa-icon [icon]="f_A.faMoneyBill"></fa-icon></div>
+                        <div class="proj_pass-content">
+                            <div>{{dataService.plan.cost}}</div>
+                            <div style="margin-left: 5px;">
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="proj_pass">
+                        <div class="proj_pass-title">Tashkil etilayotgan ish o‘rni:</div>
+                        <div class="proj_pass-icon"><fa-icon [icon]="f_A.faPeopleGroup"></fa-icon></div>
+                        <div class="proj_pass-content">
+                            <div>{{dataService.plan.workplace}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb10">
+                <div>
+                    <div *ngFor="let picture of dataService.plan.firstCollImages; let  idx = index;" class="posrel">
+                        <div><img style="width:100%;" [src]="'http://localhost:5000/' + picture"></div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="template-user-wrap-col">
+            <div class="template-user-wrap-item border-2">
+                <div class="template-user-wrap-item-header bg-color-2">Vazifalari</div>
+                <div class="template-user-wrap-item-body">
+                    <ul class="item-parts tasks">
+                        <li *ngFor="let item of dataService.plan.tasks; let idx = index;">
+                            {{item}}
+                        </li>
+                    </ul>
+                    <div *ngIf="!dataService.plan.tasks || !dataService.plan.tasks.length" class="empty-item bg-trp-2">Yo‘q</div>
+                </div>
+            </div>
+            <div class="mb10">
+                <div>
+                    <div *ngFor="let picture of dataService.plan.middleCollImages; let  idx = index;" class="posrel">
+                        <div><img style="width:100%;" [src]="'http://localhost:5000/' + picture"></div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="template-user-wrap-col">
+            <div class="template-user-wrap-item border-3">
+                <div class="template-user-wrap-item-header bg-color-3">Biriktirilgan kafedralar</div>
+                <div class="template-user-wrap-item-body">
+                    <ul class="item-parts con_dep">
+                        <li *ngFor="let item of dataService.plan.kafed; let idx = index;">
+                            {{item}}
+                        </li>
+                    </ul>
+                    <div *ngIf="!dataService.plan.kafed || !dataService.plan.kafed.length" class="empty-item bg-trp-3">Yo‘q</div>
+                </div>
+            </div>
+            <div class="template-user-wrap-item border-3">
+                <div class="template-user-wrap-item-header bg-color-3">Kutiladigan natija</div>
+                <div class="template-user-wrap-item-body">
+                    <ul class="item-parts con_dep">
+                        <li *ngFor="let item of dataService.plan.conDep; let idx = index;">
+                            {{item}}
+                        </li>
+                    </ul>
+                    <div *ngIf="!dataService.plan.conDep || !dataService.plan.conDep.length" class="empty-item bg-trp-3">Yo‘q</div>
+                    <div style="position:absolute; bottom: 0; right: 0;">
+                    </div>
+                </div>
+            </div>
+            <div class="template-user-wrap-item border-4">
+                <div class="template-user-wrap-item-header bg-color-4 fs16 text_center">Biriktirilgan spin-off(Unitar Korxona)lar</div>
+                <div class="template-user-wrap-item-body wrap-item-body-4">
+                    <ul class="item-parts spin_of">
+                        <li *ngFor="let item of dataService.plan.spinOf; let idx = index;">
+                            {{item}}
+                        </li>
+                    </ul>
+                    <div *ngIf="!dataService.plan.spinOf || !dataService.plan.spinOf.length" class="empty-item bg-trp-4">Yo‘q</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

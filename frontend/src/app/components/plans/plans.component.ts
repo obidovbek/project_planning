@@ -3,20 +3,17 @@ import {TuiDialogService, TuiSizeL, TuiSizeS} from '@taiga-ui/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { HttpService } from 'src/app/shared/services/http.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {ChangeDetectionStrategy, Component, OnInit, Inject, TemplateRef} from '@angular/core';
-import {TuiComparator, tuiDefaultSort} from '@taiga-ui/addon-table';
+import {Component, OnInit, Inject} from '@angular/core';
 import {
-    TUI_DEFAULT_MATCHER,
-    tuiControlValue,
     TuiDay,
     tuiIsPresent,
-    tuiToInt,
 } from '@taiga-ui/cdk';
 import {TUI_ARROW} from '@taiga-ui/kit';
 import {BehaviorSubject, combineLatest, Observable, timer} from 'rxjs';
-import {debounceTime, filter, map, share, startWith, switchMap} from 'rxjs/operators';
+import {filter, map, startWith, switchMap} from 'rxjs/operators';
 import {tuiClamp,TuiDropdownPortalService} from '@taiga-ui/cdk';
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus';
+import { DataService } from 'src/app/shared/services/data.service';
 
 interface User {
     readonly name: string;
@@ -45,37 +42,31 @@ export class PlansComponent implements OnInit {
     projects: any;
     scale = 1;
     filters = false;
+
     constructor(
         public authService:AuthService,
         public httpService:HttpService,
+        public dataService:DataService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
         @Inject(TuiDropdownPortalService)
         private readonly portalService: TuiDropdownPortalService,
     ) {}
     ngOnInit(): void {
     }
-    readonly form = new FormGroup({
-        balance: new FormControl(0),
-    });
+    readonly form = new FormGroup({ balance: new FormControl(0) });
  
-    get width(): string {
-        return `calc((100% + 4rem) * ${1 / this.scale})`;
-    }
+    get width(): string { return `calc((100% + 4rem) * ${1 / this.scale})`;}
  
-    onElastic(value: number): void {
-        this.scale = tuiClamp(value, 0.5, 1);
-    }
-    get transform(): string {
-        return `scale(${this.scale})`;
-    }
+    onElastic(value: number): void {  this.scale = tuiClamp(value, 0.5, 1);}
+    
+    get transform(): string { return `scale(${this.scale})`; }
 
-    //TuiDialogSize = 's' | 'm' | 'l' | 'xl' | 'xxl' | 'full';
     showFullPlan(
         item: any,
         content: PolymorpheusContent,
     ): void {
- 
-        this.dialogService.open(content, {size: 'l'}).subscribe({
+        this.dataService.plan = item;
+        this.dialogService.open(content, {size: 'auto'}).subscribe({
             complete: () => {
             },
         });
@@ -99,9 +90,8 @@ export class PlansComponent implements OnInit {
     remove(item: User): void {
         // this.users = this.users.filter(user => user !== item);
     }
-    logout(){
-        this.authService.logout();
-    }
+    logout(){ this.authService.logout(); }
+
     private readonly size$ = new BehaviorSubject(10);
     private readonly page$ = new BehaviorSubject(0);
  
@@ -133,13 +123,9 @@ export class PlansComponent implements OnInit {
     );
  
  
-    onSize(size: number): void {
-        this.size$.next(size);
-    }
+    onSize(size: number): void { this.size$.next(size);}
  
-    onPage(page: number): void {
-        this.page$.next(page);
-    }
+    onPage(page: number): void { this.page$.next(page);}
  
     private getData(
         page: number,
