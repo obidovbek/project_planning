@@ -110,10 +110,10 @@ export class TemplateComponent implements OnInit {
 	postProject(){
 		this.formGroup.setValue(this.dataService.plan);
 		console.log('postProject', this.formGroup.value)
-		// this.httpService.postProject()
-		// .subscribe(res=>{
-		// 	console.log('postProject', res)
-		// })
+		this.httpService.postProject()
+		.subscribe(res=>{
+			console.log('postProject', res)
+		})
 	}
 	addItem(type:string, value:any){
 		if(!value){return;}

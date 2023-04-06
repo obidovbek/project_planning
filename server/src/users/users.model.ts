@@ -34,4 +34,6 @@ export class User extends Model<User, UserCreationAttrs> {
 
     // @HasMany(() => Post)
     // posts: Post[];
+
+
 }
