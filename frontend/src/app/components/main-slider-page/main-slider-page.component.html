@@ -22,7 +22,7 @@
                         tuiButton
                         class="margin-left-10"
                         appearance="firstButton"
-                        (click)="showDialog()"
+                        (click)="showDialog(FullPlan)"
                     >
                         Loyiha holatini tekshirish
                     </a>
@@ -63,3 +63,6 @@
     </form>
 </ng-template>
 </tui-root>
+<ng-template #FullPlan class="FullPlan">
+    <app-template [onlyView]="true"></app-template>
+</ng-template>

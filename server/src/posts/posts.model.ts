@@ -19,6 +19,7 @@ interface PostCreationAttrs {
     owner: string;
     cost: string;
     workplace: string;
+    review: object;
 }
 
 @Table({tableName: 'posts'})
@@ -64,5 +65,8 @@ export class Post extends Model<Post, PostCreationAttrs> {
 
     @Column({type: DataType.STRING})
     workplace: string;
+
+    @Column({type: DataType.JSON})
+    review: object;
 
 }

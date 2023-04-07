@@ -19,7 +19,7 @@ import {
   import {AbstractControl, FormControl, ValidatorFn} from '@angular/forms';
   import {TuiValidationError} from '@taiga-ui/cdk';
   import {TuiFileLike} from '@taiga-ui/kit';
-  import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+  import { FormBuilder } from '@angular/forms';
   import {  Router } from "@angular/router";
 @Component({
 	selector: 'app-template',

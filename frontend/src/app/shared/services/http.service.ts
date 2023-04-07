@@ -25,6 +25,9 @@ export class HttpService {
         
         // var reqFilters = [];
         // // var reqFilters = JSON.parse(request.query.filters);
+    getOneProject(announcedNumber:number){
+      return this.http.get(environment.http.get_one_project.path + announcedNumber)       
+    }
     getProjects(page:number, limit:number){
       let params = new HttpParams()
       .set('limit', limit)

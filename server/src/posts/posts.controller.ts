@@ -1,10 +1,12 @@
-import {Body, Controller, Post, Get, UploadedFiles, UseInterceptors, Delete, Req, Res, HttpStatus} from '@nestjs/common';
+import {Body, Controller, Post, Get, UploadedFiles, 
+  UseInterceptors, Delete, Req, Res, HttpStatus, Param} from '@nestjs/common';
 import {CreatePostDto} from "./dto/create-post.dto";
 import {PostsService} from "./posts.service";
 // import {FileInterceptor} from "@nestjs/platform-express";
 // import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { diskStorage, Multer } from "multer";
+import { request } from 'http';
 // import { FormDataRequest } from "nestjs-form-data/dist/decorators";
 const MIME_TYPE_MAP = {
     "image/png": "png",
@@ -44,11 +46,18 @@ export class PostsController {
     delete(){
         return this.postService.delete();
     }
-    @Get('getOne')
-    async getOne(@Req() request,  @Res() response){
-        console.log('getOne', request.params.id);
-        const findAndCountAll = await this.postService.findAndCountAll(request);
-        return response.status(HttpStatus.OK).json(findAndCountAll);
+
+    @Post('updateReview')
+    updatePost(@Req() request, @Res() response){
+        const update = this.postService.updatePost(request);
+        return response.status(HttpStatus.OK).json(update);
+    }
+
+
+    @Get('getOne/:announcedNumber')
+    async getOne(@Param() announcedNumber, @Res() response){
+        const getOne = await this.postService.findOne(announcedNumber);
+        return response.status(HttpStatus.OK).json(getOne);
     }
     @Get('getWithCount')
     async getAll(@Req() request,  @Res() response){

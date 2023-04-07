@@ -7,6 +7,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReactiveFormsModule  } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ALL_TAIGA_UI_MODULES } from 'src/app/shared/all-taigu-modules/all-taigu-modules.module';
+import { TemplateModule } from '../template/template.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ALL_TAIGA_UI_MODULES } from 'src/app/shared/all-taigu-modules/all-taigu
     FontAwesomeModule,
     InfiniteScrollModule,
     ReactiveFormsModule,
+    TemplateModule,
     SharedModule,
     ...ALL_TAIGA_UI_MODULES,
   ],

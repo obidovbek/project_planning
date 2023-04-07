@@ -9,4 +9,5 @@ export class CreatePostDto {
     readonly owner: string;
     readonly cost: string;
     readonly workplace: string;
+    readonly review: object;
 }

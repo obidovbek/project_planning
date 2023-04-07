@@ -29,17 +29,24 @@ export class PostsService {
                 cost: dto.cost,
                 workplace: dto.workplace,
                 firstCollImages, 
-                middleCollImages
+                middleCollImages,
+                review: {status:'checking', comments:''}
         });
         return post;
     }
     async delete(){
         return this.postRepository.destroy({ truncate: true })
     }
-    async findOne(id: number){
+    async updatePost(request){
+        console.log('request.body', request.body);
+        const updatePost = await this.postRepository.update({review: request.body.review}, {
+            where: {announcedNumber: request.body.announcedNumber},
+        })
+    }
+    async findOne(announcedNumber: {announcedNumber:number}){
+        console.log(announcedNumber);
         const post = await this.postRepository.findOne({
-            where: {id},
-            include: {all: true}
+            where: announcedNumber
         });
         return post;
     }

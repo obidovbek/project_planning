@@ -7,8 +7,11 @@ export const environment = {
     post_project:{
       path: url + 'posts/'
     },
+    get_one_project:{
+      path: url + 'posts/getOne/'
+    },
     get_projects:{
-      path: url + 'posts/'
+      path: url + 'posts/getWithCount/'
     },
     login:{
       path: url + 'auth/login/'
