@@ -14,9 +14,9 @@ export class HttpService {
     ) { }
 
 
-    postProject(){
+    postProject(post:any){
         return this.http.post(environment.http.post_project.path, 
-            this.dataService.plan
+            post
         )       
     }
         // // const pageSize = +request.query.pagesize;
@@ -25,10 +25,10 @@ export class HttpService {
         
         // var reqFilters = [];
         // // var reqFilters = JSON.parse(request.query.filters);
-    getProjects(currentPage:number, pagesize:number){
+    getProjects(page:number, limit:number){
       let params = new HttpParams()
-      .set('pagesize', pagesize)
-      .set('page', currentPage)
+      .set('limit', limit)
+      .set('page', page)
       .set('filters', JSON.stringify([]));
       return this.http.get(environment.http.get_projects.path, {params: params})       
     }

@@ -3,15 +3,16 @@ import {ApiProperty} from "@nestjs/swagger";
 import {Role} from "../roles/roles.model";
 import {UserRoles} from "../roles/user-roles.model";
 import {User} from "../users/users.model";
+import { Sequelize } from 'sequelize';
 
 interface PostCreationAttrs {
     goal: string[];
-    projPass: string[];
+    // projPass: string[];
+    generatedId: number;
     tasks: string[];
     kafed: string[];
     conDep: string[];
     spinOf: string[];
-    mainData: Object;
     firstCollImages: string[];
     middleCollImages: string[];
     title: string;
@@ -25,11 +26,14 @@ export class Post extends Model<Post, PostCreationAttrs> {
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
     id: number;
 
+    @Column({type: DataType.INTEGER, unique: true})
+    generatedId: number;
+
     @Column({type: DataType.ARRAY(DataType.STRING)})
     goal: string[];
     
-    @Column({type: DataType.ARRAY(DataType.STRING)})
-    projPass: string[];
+    // @Column({type: DataType.ARRAY(DataType.STRING)})
+    // projPass: string[];
     
     @Column({type: DataType.ARRAY(DataType.STRING)})
     tasks: string[];
@@ -42,9 +46,6 @@ export class Post extends Model<Post, PostCreationAttrs> {
         
     @Column({type: DataType.ARRAY(DataType.STRING)})
     spinOf: string[];
-        
-    @Column({type: 'varchar'})
-    mainData: object;
 
     @Column({type: DataType.ARRAY(DataType.STRING)})
     firstCollImages: string[];

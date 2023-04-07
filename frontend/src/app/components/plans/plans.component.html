@@ -20,30 +20,10 @@
             </div>
         </div>
         <div class="template-user-wrap">
-            <form
-                class="form"
-                [formGroup]="form"
-            >
-                <tui-input-number
-                    tuiTableFilter="balance"
-                    formControlName="balance"
-                    class="control"
-                    [tuiGenericFilter]="filter"
-                >
-                    Minimal balance
-                </tui-input-number>
-                <label>
-                    <tui-toggle
-                        [ngModelOptions]="{standalone: true}"
-                        [ngModel]="form.enabled"
-                        (ngModelChange)="onToggle($event)"
-                    ></tui-toggle>
-                    Enable filtering
-                </label>
-            </form>
             <tui-loader
                 [overlay]="true"
                 [showLoader]="!!(loading$ | async)"
+                class="tui-loader"
             >
                 <table
                     *ngIf="data$ | async as data"
@@ -85,13 +65,13 @@
                                 *tuiCell="'title'"
                                 tuiTd
                             >
-                                {{ index + 1 }}. {{ item.mainData.title }}
+                                {{ index + 1 }}. {{ item.title }}
                             </td>
                             <td
                                 *tuiCell="'owner'"
                                 tuiTd
                             >
-                                {{ item.mainData.owner }}
+                                {{ item.owner }}
                             </td>
                             <td
                                 *tuiCell="'actions'"
@@ -125,7 +105,7 @@
                                     title="To‘liq ko‘rish"
                                     shape="rounded"
                                     class="watch"
-                                    (click)="remove(item)"
+                                    (click)="showFullPlan(item, FullPlan)"
                                 ></button>
                             </td> 
                         </tr>
@@ -149,7 +129,6 @@
         </div>
 
     </div>
-</tui-root>
 
 
 <ng-template
@@ -175,3 +154,7 @@ let-activeZone
     </div>
 
 </ng-template>
+<ng-template #FullPlan class="FullPlan">
+    <app-template [onlyView]="true"></app-template>
+</ng-template>
+</tui-root>

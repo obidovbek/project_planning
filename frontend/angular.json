@@ -43,6 +43,7 @@
               "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
               "node_modules/@taiga-ui/styles/taiga-ui-global.less",
               "src/styles.scss",
+              "src/assets/scss/style.scss",
               "src/app/shared/all-taigu-modules/styles/taiga-ui-stackblitz.less"
             ],
             "scripts": []

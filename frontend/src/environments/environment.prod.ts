@@ -8,7 +8,7 @@ export const environment = {
       path: url + 'posts/'
     },
     get_projects:{
-      path: url + 'projects/'
+      path: url + 'posts/'
     },
     login:{
       path: url + 'auth/login/'

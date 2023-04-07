@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import { PlansModule } from "./components/plans/plans.module";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
       ReactiveFormsModule,
       AppRoutingModule,
       TemplateModule,
+      PlansModule,
       SharedModule,
       BrowserAnimationsModule,
       HttpClientModule

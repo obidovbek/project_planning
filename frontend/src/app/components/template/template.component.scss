@@ -26,6 +26,9 @@
             & img{
                 width: 115px;
             }
+            &.only-view{
+                left: 0;
+            }
             @media only screen and (max-width: 950px){
                 left: calc(50% - 66px);
             }

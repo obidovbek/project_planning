@@ -31,7 +31,7 @@
 .table {
     width: 100%;
 }
- 
+
 .filters {
     display: flex;
 }
@@ -39,13 +39,16 @@
 .input {
     flex: 1;
 }
- 
+
 .columns {
     width: 10.625rem;
 }
  
 .match {
     background: var(--tui-selection);
+}
+.tui-loader{
+    width: 100%;
 }
 .template-user{
     width: 1040px;

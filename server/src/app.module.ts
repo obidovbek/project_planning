@@ -12,7 +12,7 @@ import {Post} from "./posts/posts.model";
 import { FilesModule } from './files/files.module';
 import {ServeStaticModule} from "@nestjs/serve-static";
 import * as path from 'path';
-
+// import { join } from 'path';
 @Module({
     controllers: [],
     providers: [],
@@ -37,7 +37,7 @@ import * as path from 'path';
         RolesModule,
         AuthModule,
         PostsModule,
-        FilesModule,
+        FilesModule
     ]
 })
 export class AppModule {}
