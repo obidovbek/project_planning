@@ -18,7 +18,7 @@ export class PostsService {
         // var randomNumber = Math.floor(Math.random() * 900000) + 100000;
         const post = await this.postRepository.create(
             {
-                generatedId:  Math.floor(Math.random() * 900000) + 100000,
+                announcedNumber:  Math.floor(Math.random() * 900000) + 100000,
                 goal: (typeof dto.goal === 'string')?[dto.goal]:dto.goal,
                 tasks: (typeof dto.tasks === 'string')?[dto.tasks]:dto.tasks,
                 kafed: (typeof dto.kafed === 'string')?[dto.kafed]:dto.kafed,
@@ -35,6 +35,13 @@ export class PostsService {
     }
     async delete(){
         return this.postRepository.destroy({ truncate: true })
+    }
+    async findOne(id: number){
+        const post = await this.postRepository.findOne({
+            where: {id},
+            include: {all: true}
+        });
+        return post;
     }
     async findAndCountAll(request: any){
         const limit = +request.query.limit ? ((+request.query.limit <= 200)?(+request.query.limit):200) : 10;

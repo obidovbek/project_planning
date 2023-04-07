@@ -35,7 +35,7 @@ export class TemplateComponent implements OnInit {
 	// arr: FormArray;
 
 	rejectedFiles: readonly TuiFileLike[] = [];
-	generatedId:number = 0;
+	announcedNumber:number = 0;
 	private readonly dialog = this.dialogService.open<boolean>(
 		new PolymorpheusComponent(DialogComponent, this.injector),
 		{ dismissible: true, label: 'Ma\'lumotni kirgizing?' }
@@ -136,7 +136,7 @@ export class TemplateComponent implements OnInit {
 		}
 		this.httpService.postProject(formData)
 		.subscribe(async (res:any)=>{
-			this.generatedId = res.generatedId;
+			this.announcedNumber = res.announcedNumber;
 			await this.dialogService.open(content).subscribe();
 		})
 	}

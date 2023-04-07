@@ -1,3 +1,4 @@
+<tui-root>
 <tui-carousel
     [duration]="4000"
     [(index)]="index"
@@ -17,6 +18,14 @@
                     >
                         Loyiha jo‘natish
                     </a>
+                    <a
+                        tuiButton
+                        class="margin-left-10"
+                        appearance="firstButton"
+                        (click)="showDialog()"
+                    >
+                        Loyiha holatini tekshirish
+                    </a>
                 </div>
             </div>
         </tui-island>
@@ -28,3 +37,29 @@
     [length]="items.length"
     [(index)]="index"
 ></tui-pagination>
+<ng-template
+    let-observer
+    [tuiDialogOptions]="{label: 'Loyihangiz e\'lon qilingan raqamni kirgizing!', size: 's'}"
+    [(tuiDialog)]="open"
+>
+    <form
+        [formGroup]="planForm"
+        (ngSubmit)="observer.complete()"
+    >
+        <tui-input
+            tuiAutoFocus
+            formControlName="announcedNumber"
+        >
+            Raqam
+        </tui-input>
+        <p>
+            <button
+                tuiButton
+                type="submit"
+            >
+                Topish
+            </button>
+        </p>
+    </form>
+</ng-template>
+</tui-root>

@@ -8,7 +8,7 @@ import { Sequelize } from 'sequelize';
 interface PostCreationAttrs {
     goal: string[];
     // projPass: string[];
-    generatedId: number;
+    announcedNumber: number;
     tasks: string[];
     kafed: string[];
     conDep: string[];
@@ -27,7 +27,7 @@ export class Post extends Model<Post, PostCreationAttrs> {
     id: number;
 
     @Column({type: DataType.INTEGER, unique: true})
-    generatedId: number;
+    announcedNumber: number;
 
     @Column({type: DataType.ARRAY(DataType.STRING)})
     goal: string[];
