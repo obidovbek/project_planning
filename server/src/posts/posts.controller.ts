@@ -44,10 +44,17 @@ export class PostsController {
     delete(){
         return this.postService.delete();
     }
-
-    @Get()
+    @Get('getOne')
+    async getOne(@Req() request,  @Res() response){
+        console.log('getOne', request.params.id);
+        const findAndCountAll = await this.postService.findAndCountAll(request);
+        return response.status(HttpStatus.OK).json(findAndCountAll);
+    }
+    @Get('getWithCount')
     async getAll(@Req() request,  @Res() response){
         const findAndCountAll = await this.postService.findAndCountAll(request);
         return response.status(HttpStatus.OK).json(findAndCountAll);
     }
+
+
 }
