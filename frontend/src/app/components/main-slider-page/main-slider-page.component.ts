@@ -39,8 +39,9 @@ export class MainSliderPageComponent implements OnInit {
         if(res){
           this.dataService.plan = res;
           this.onlyView = true;
-          this.dialogService.open(content, {size: 'fullscreen'}).subscribe({
+          this.dialogService.open(content, {size: 'auto'}).subscribe({
             complete: () => {
+              this.dataService.plan = this.dataService.planInitial
             },
           });
         }else{

@@ -6,6 +6,18 @@ import { Injectable } from '@angular/core';
 export class DataService {
 
   constructor() { }
+  planInitial:any = {
+    goal: [],
+    projPass: [],
+    tasks: [],
+    kafed: [],
+    conDep: [],
+    spinOf: [],
+    title: 'Loyiha nomini kirgizing?',
+    owner: 'Namuna: "Kimyo texnologiya" fakulteti 72-21 elita guruh talabasi Jo‘rayev Javohir',
+    cost: '',
+    workplace: ''
+  }
   plan:any = {
     goal: [],
     projPass: [],

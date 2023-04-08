@@ -10,11 +10,11 @@ import {
 } from '@taiga-ui/cdk';
 import {TUI_ARROW} from '@taiga-ui/kit';
 import {BehaviorSubject, combineLatest, Observable, timer} from 'rxjs';
-import {filter, map, startWith, switchMap} from 'rxjs/operators';
+import {filter, map, startWith, switchMap, tap} from 'rxjs/operators';
 import {tuiClamp,TuiDropdownPortalService} from '@taiga-ui/cdk';
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus';
 import { DataService } from 'src/app/shared/services/data.service';
-
+import {TuiDialogContext} from '@taiga-ui/core';
 interface User {
     readonly name: string;
     readonly dob: TuiDay;
@@ -42,6 +42,8 @@ export class PlansComponent implements OnInit {
     projects: any;
     scale = 1;
     filters = false;
+    planData: any;
+    rejectComment = '';
 
     constructor(
         public authService:AuthService,
@@ -71,8 +73,52 @@ export class PlansComponent implements OnInit {
             },
         });
     }
+    onModelChange(value: string): void {
+        this.rejectComment = value;
+    }
 
-
+    showDialogReviewPlan(plan:any, content: PolymorpheusContent<TuiDialogContext>): void {
+        this.planData = plan;
+        this.dialogService.open(content).subscribe();
+    }
+    acceptPlan(observer:any){
+        this.data$ = this.data$.pipe(
+            switchMap((plans:any)=>plans),
+            // filter((plan:any)=>plan.announceNumber == this.planData.announcedNumber),
+            map((plan:any)=>{
+                if(plan.announcedNumber === this.planData.announcedNumber){
+                    plan.review.status = 'accepted';
+                    plan.review.comments = '';
+                    console.log('plan', plan)
+                }
+                return plan;
+            })
+        )
+        // this.httpService.reviewProject(
+        //     {
+        //         announcedNumber:this.planData.announcedNumber,
+        //         review:{ status: 'accepted', comments: ''}
+        //     }).subscribe(res=>{
+        //         if(res){
+                    
+        //         }
+        //         console.log('acceptPlan', res)
+        //         observer.complete()
+        //     })
+    }
+    rejectPlan(observer:any){
+        this.httpService.reviewProject(
+            {
+                announcedNumber:this.planData.announcedNumber,
+                review:{ status: 'rejected', comments: this.rejectComment}
+            }).subscribe(res=>{
+                if(res){
+                    
+                }
+                this.rejectComment = '';
+                observer.complete()
+            })
+    }
 
     readonly filter = (item: number, value: number): boolean => item >= value;
  
@@ -104,11 +150,11 @@ export class PlansComponent implements OnInit {
         switchMap(query => this.getData(...query).pipe(startWith(null))),
     );
 
-    initial: readonly string[] = ['title', 'owner', 'actions'];
+    initial: readonly string[] = ['announcedNumber', 'title', 'owner', 'review', 'actions'];
  
     enabled = this.initial;
  
-    columns = ['title', 'owner', 'actions'];
+    columns = ['announcedNumber', 'title', 'owner' , 'review', 'actions'];
  
     readonly arrow = TUI_ARROW;
  
@@ -116,7 +162,7 @@ export class PlansComponent implements OnInit {
  
     readonly total$ = this.request$.pipe(map((data:any) => data?.totalPosts));
  
-    readonly data$: Observable<readonly any[]> = this.request$.pipe(
+    data$: Observable<readonly any[]> = this.request$.pipe(
         filter(tuiIsPresent),
         map((data:any) => data.posts.filter(tuiIsPresent)),
         startWith([]),

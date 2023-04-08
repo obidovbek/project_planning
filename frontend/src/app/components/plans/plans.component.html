@@ -2,20 +2,21 @@
     <div class="template-user">
         
         <div class="template-user-header">
-            <div class="template-user-header-logo">
-                <img src="/assets/images/ferpi-logo.png" alt="">
-            </div>
             <div class="template-user-header-content">
-            <tui-hosted-dropdown
-                #dropdown
-                [content]="content"
-                [(open)]="dropdownOpen"
-            >
-                <tui-avatar
-                    text="Obidov Bekzod"
-                    class="tui-space_top-1"
-                ></tui-avatar>
-            </tui-hosted-dropdown>
+                <div class="template-user-header-logo">
+                    <img src="/assets/images/ferpi-logo.png" alt="">
+                </div>
+                <div>Loyihalar</div>
+                <tui-hosted-dropdown
+                    #dropdown
+                    [content]="content"
+                    [(open)]="dropdownOpen"
+                >
+                    <tui-avatar
+                        text="Obidov Bekzod"
+                        class="tui-space_top-1"
+                    ></tui-avatar>
+                </tui-hosted-dropdown>
 
             </div>
         </div>
@@ -34,16 +35,28 @@
                     <thead>
                         <tr tuiThGroup>
                             <th
+                                *tuiHead="'announcedNumber'"
+                                tuiTh
+                            >
+                                Raqam
+                            </th>
+                            <th
                                 *tuiHead="'title'"
                                 tuiTh
                             >
-                                Loyiha nomi
+                                Nomi
                             </th>
                             <th
                                 *tuiHead="'owner'"
                                 tuiTh
                             >
-                                Loyiha tashabbuskori
+                                Tashabbuskori
+                            </th>
+                            <th
+                                *tuiHead="'review'"
+                                tuiTh
+                            >
+                                Holati
                             </th>
                             <th
                                 *tuiHead="'actions'"
@@ -62,6 +75,12 @@
                             tuiTr
                         >
                             <td
+                                *tuiCell="'announcedNumber'"
+                                tuiTd
+                            >
+                                {{ item.announcedNumber }}
+                            </td>
+                            <td
                                 *tuiCell="'title'"
                                 tuiTd
                             >
@@ -72,6 +91,15 @@
                                 tuiTd
                             >
                                 {{ item.owner }}
+                            </td>
+                            <td
+                                *tuiCell="'review'"
+                                tuiTd
+                            >
+                                <tui-tag
+                                    [class]="item.review.status"
+                                    [value]="(item.review.status === 'accepted') ? 'Tasdiqlangan' : ((item.review.status === 'rejected') ? 'Rad etilgan' : 'Tekshirishda')"
+                                ></tui-tag>
                             </td>
                             <td
                                 *tuiCell="'actions'"
@@ -85,7 +113,7 @@
                                     title="Rad etsih"
                                     shape="rounded"
                                     class="remove"
-                                    (click)="remove(item)"
+                                    (click)="showDialogReviewPlan(item, RejectPlan)"
                                 ></button>
                                 <button
                                     tuiIconButton
@@ -95,7 +123,7 @@
                                     title="Tasdiqlash"
                                     shape="rounded"
                                     class="check"
-                                    (click)="remove(item)"
+                                    (click)="showDialogReviewPlan(item, AcceptPlan)"
                                 ></button>
                                 <button
                                     tuiIconButton
@@ -158,3 +186,60 @@ let-activeZone
     <app-template [onlyView]="true"></app-template>
 </ng-template>
 </tui-root>
+<ng-template
+    #AcceptPlan
+    let-observer
+    >
+    <h1>Loyihani qabul qilish?</h1>
+    <h3>E'lon raqami: {{planData.announcedNumber}}</h3>
+    <button
+        tuiButton
+        type="button"
+        size="m"
+        class="tui-space_right-3"
+        (click)="observer.complete()"
+    >
+        Bekor qilish&nbsp;
+    </button>
+    <button
+        tuiButton
+        type="button"
+        size="m"
+        (click)="acceptPlan(observer)"
+    >
+        Tasdiqlash
+    </button>
+</ng-template>
+<ng-template
+    #RejectPlan
+    let-observer
+>
+    <h1>Loyihani rad qilish?</h1>
+    <h3>E'lon raqami: {{planData.announcedNumber}}</h3>
+    <tui-input
+        class="tui-space_bottom-3"
+        [ngModel]="rejectComment"
+        (ngModelChange)="onModelChange($event)"
+    >
+        Rad etish sababi
+    </tui-input>
+    <button
+        tuiButton
+        type="button"
+        size="m"
+        class="tui-space_right-3"
+        (click)="observer.complete()"
+    >
+        Bekor qilish&nbsp;
+    </button>
+    <button
+        tuiButton
+        type="button"
+        size="m"
+        class="tui-space_right-3"
+        (click)="rejectPlan(observer)"
+    >
+        Rad etish
+    </button>
+
+</ng-template>

@@ -47,7 +47,7 @@ export class PostsController {
         return this.postService.delete();
     }
 
-    @Post('updateReview')
+    @Post('review')
     updatePost(@Req() request, @Res() response){
         const update = this.postService.updatePost(request);
         return response.status(HttpStatus.OK).json(update);

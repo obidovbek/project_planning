@@ -7,6 +7,9 @@ export const environment = {
     post_project:{
       path: url + 'posts/'
     },
+    review_project:{
+      path: url + 'posts/review/'
+    },
     get_one_project:{
       path: url + 'posts/getOne/'
     },

@@ -14,17 +14,17 @@ export class HttpService {
     ) { }
 
 
+    reviewProject(data:any){
+      return this.http.post(environment.http.review_project.path, 
+          data
+      )       
+    }
     postProject(post:any){
         return this.http.post(environment.http.post_project.path, 
             post
         )       
     }
-        // // const pageSize = +request.query.pagesize;
-        // const currentPage = 1;
-        // // const currentPage = +request.query.page;
-        
-        // var reqFilters = [];
-        // // var reqFilters = JSON.parse(request.query.filters);
+
     getOneProject(announcedNumber:number){
       return this.http.get(environment.http.get_one_project.path + announcedNumber)       
     }

@@ -137,6 +137,7 @@ export class TemplateComponent implements OnInit {
 		this.httpService.postProject(formData)
 		.subscribe(async (res:any)=>{
 			this.announcedNumber = res.announcedNumber;
+			this.dataService.plan = this.dataService.planInitial;
 			await this.dialogService.open(content).subscribe();
 		})
 	}

@@ -3,7 +3,18 @@
     align-items: center;
     margin-bottom: 1rem;
 }
- 
+.checking {
+    color: black !important;
+    background-color: #ffd85b !important;
+}
+.accepted {
+    color: white !important;
+    background-color:  #42bf6e !important;
+}
+.rejected {
+    color: white !important;
+    background-color: #ee3f5e !important;
+}
 .control {
     flex: 1;
     margin-right: 2rem;
@@ -51,7 +62,7 @@
     width: 100%;
 }
 .template-user{
-    width: 1040px;
+    width: 1080px;
     max-width: 100%;
     padding: 0px;
     margin: 0 auto;
@@ -66,9 +77,6 @@
         //     background-color: #e1f3fd;
         // }
         &-logo{
-            position: absolute;
-            top: 0;
-            left: 0px;
             height: 56px;
             width: 133px;
             background-color: #c6d9f1;
@@ -87,7 +95,7 @@
             background-color: #e1f3fd;
             color: #2c475f;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             height: 56px;
             font-size: 23px;
