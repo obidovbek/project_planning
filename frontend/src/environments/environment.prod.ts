@@ -1,8 +1,10 @@
-const url = "http://localhost:5000/"; //asosiy
+// const url = "http://localhost:5000/"; //asosiy
+const url = "https://tiilapi.ferpi.uz/"; //asosiy
 
 export const environment = {
   production: true,
-  apiUrl: "http://localhost:5000",
+  // apiUrl: "http://localhost:5000",
+  // apiUrl: "http://localhost:5000",
   http: {
     post_project:{
       path: url + 'posts/'
