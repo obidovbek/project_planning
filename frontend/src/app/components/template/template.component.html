@@ -367,9 +367,30 @@
     </ng-template>
 </tui-root>
 
-
-<div class="template-user" *ngIf="onlyView">
-        
+<div *ngIf="planOwner">
+    <tui-notification
+        status="success"
+        class="tui-space_top-4"
+        *ngIf="dataService.plan.review.status === 'accepted'"
+    >
+        Uraaa TABRIKLAYMIZ, loyihangiz qabul qilindi!!!(Rektorga uchrashingizni so‘raymiz!)
+    </tui-notification>
+    <tui-notification
+        status="error"
+        class="tui-space_top-4"
+        *ngIf="dataService.plan.review.status === 'rejected'"
+    >
+        Afsuski loyihangiz qabul qilinmadi. <span *ngIf="dataService.plan.review.comments">sababi: {{dataService.plan.review.comments}}</span> 
+    </tui-notification>
+    <tui-notification
+        status="warning"
+        class="tui-space_top-4"
+        *ngIf="dataService.plan.review.status === 'checking'"
+    >
+        Loyiha tekshirishda, iltimos kutib turing!
+    </tui-notification>
+</div>    
+<div class="template-user" *ngIf="onlyView">     
     <div class="template-user-header">
         <div class="template-user-header-logo only-view">
             <img src="/assets/images/ferpi-logo.png" alt="">

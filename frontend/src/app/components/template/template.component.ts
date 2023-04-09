@@ -29,6 +29,7 @@ import {
 export class TemplateComponent implements OnInit {
     
 	@Input() onlyView: boolean = false;
+	@Input() planOwner: boolean = false;
 	
 	readonly firstCollImages = new FormControl([], [maxFilesLength(5)]);
 	readonly middleCollImages = new FormControl([], [maxFilesLength(5)]);

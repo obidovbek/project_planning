@@ -82,38 +82,38 @@ export class PlansComponent implements OnInit {
         this.dialogService.open(content).subscribe();
     }
     acceptPlan(observer:any){
-        this.data$ = this.data$.pipe(
-            switchMap((plans:any)=>plans),
-            // filter((plan:any)=>plan.announceNumber == this.planData.announcedNumber),
-            map((plan:any)=>{
-                if(plan.announcedNumber === this.planData.announcedNumber){
-                    plan.review.status = 'accepted';
-                    plan.review.comments = '';
-                    console.log('plan', plan)
-                }
-                return plan;
-            })
-        )
-        // this.httpService.reviewProject(
-        //     {
-        //         announcedNumber:this.planData.announcedNumber,
-        //         review:{ status: 'accepted', comments: ''}
-        //     }).subscribe(res=>{
-        //         if(res){
-                    
-        //         }
-        //         console.log('acceptPlan', res)
-        //         observer.complete()
-        //     })
-    }
-    rejectPlan(observer:any){
+        const review = { status: 'accepted', comments: ''}
         this.httpService.reviewProject(
             {
                 announcedNumber:this.planData.announcedNumber,
-                review:{ status: 'rejected', comments: this.rejectComment}
+                review
             }).subscribe(res=>{
                 if(res){
-                    
+                    this.data$ = this.updateReviewPlansTable(review);
+                }
+                observer.complete()
+            })
+    }
+    updateReviewPlansTable(review:{status:string, comments:string}){
+        return this.data$.pipe(
+            map((plans:any)=>{
+                plans.map((plan:any)=>{
+                    if(plan.announcedNumber === this.planData.announcedNumber){
+                        plan.review = review;
+                    }
+                })
+                return plans;})
+        ) 
+    }
+    rejectPlan(observer:any){
+        const review = { status: 'rejected', comments: this.rejectComment};
+        this.httpService.reviewProject(
+            {
+                announcedNumber:this.planData.announcedNumber,
+                review
+            }).subscribe(res=>{
+                if(res){
+                    this.data$ = this.updateReviewPlansTable(review);
                 }
                 this.rejectComment = '';
                 observer.complete()
