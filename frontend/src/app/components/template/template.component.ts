@@ -61,7 +61,8 @@ export class TemplateComponent implements OnInit {
 		console.log('plan ', this.dataService.plan)
 		this.firstCollImages.statusChanges.subscribe(response => { this.addImageFirstColl(); });
 		this.middleCollImages.statusChanges.subscribe(response => { this.addImageMiddleColl(); });
-
+			this.dataService.plan.firstCollImages.map((file:string, index:number)=>{ this.getFile(file, index, 'firstCol') })
+			this.dataService.plan.middleCollImages.map((file:string, index:number)=>{ this.getFile(file, index, 'middleCol') })
     }
 
 	public masonryOptionsImages: NgxMasonryOptions = {
@@ -70,7 +71,7 @@ export class TemplateComponent implements OnInit {
 		initLayout: true,
 		fitWidth: true
 	};
-
+	
     addImageFirstColl(){
 		this.firstCollImages.value?.map((file, index, a)=>{
 			console.log('addImageFirstColl')
@@ -81,7 +82,21 @@ export class TemplateComponent implements OnInit {
 			}
 		})
 	}
-
+	getFile(filename:string, index:number, column:string){
+		this.httpService.getFile(filename).subscribe((blob:any) => {
+			const reader = new FileReader();
+			reader.addEventListener('load', () => {
+				if(column === 'firstCol'){
+					this.dataService.plan.firstCollImages[index] = reader.result;
+				}else if(column === 'middleCol'){
+					this.dataService.plan.middleCollImages[index] = reader.result;
+				}
+			}, false);
+			if (blob) {
+			  reader.readAsDataURL(blob);
+			}
+		  });
+	}
     addImageMiddleColl(){
 			console.log('addImageMiddleColl')
 		this.middleCollImages.value?.map((file, index, a)=>{

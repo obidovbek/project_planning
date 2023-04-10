@@ -7,6 +7,8 @@ import {PostsService} from "./posts.service";
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { diskStorage, Multer } from "multer";
 import { request } from 'http';
+import { Response } from 'express';
+import { join } from 'path';
 // import { FormDataRequest } from "nestjs-form-data/dist/decorators";
 const MIME_TYPE_MAP = {
     "image/png": "png",
@@ -53,7 +55,13 @@ export class PostsController {
         return response.status(HttpStatus.OK).json(update);
     }
 
-
+    @Get('file/:filename')
+    async getfile(@Param() filename, @Res() res: Response){
+        // console.log('filename ', filename, join(__dirname, '..', '..', 'uploads'))
+        return res.sendFile(filename.filename, { root: join(__dirname, '..', '..', 'uploads') });
+        // const getOne = await this.postService.findOne(filename);
+        // return res.status(HttpStatus.OK).json(getOne);
+    }
     @Get('getOne/:announcedNumber')
     async getOne(@Param() announcedNumber, @Res() response){
         const getOne = await this.postService.findOne(announcedNumber);

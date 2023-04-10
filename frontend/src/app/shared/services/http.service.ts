@@ -28,6 +28,9 @@ export class HttpService {
     getOneProject(announcedNumber:number){
       return this.http.get(environment.http.get_one_project.path + announcedNumber)       
     }
+    getFile(filename:string){
+      return this.http.get(environment.http.get_file.path + filename, {responseType: 'blob'})       
+    }
     getProjects(page:number, limit:number){
       let params = new HttpParams()
       .set('limit', limit)

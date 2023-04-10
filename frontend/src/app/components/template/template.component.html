@@ -445,7 +445,7 @@
             <div class="mb10">
                 <div>
                     <div *ngFor="let picture of dataService.plan.firstCollImages; let  idx = index;" class="posrel">
-                        <div><img style="width:100%;" [src]="'http://localhost:5000/' + picture"></div>
+                        <div><img style="width:100%;" [src]="picture"></div>
                     </div> 
                 </div>
             </div>
@@ -465,7 +465,7 @@
             <div class="mb10">
                 <div>
                     <div *ngFor="let picture of dataService.plan.middleCollImages; let  idx = index;" class="posrel">
-                        <div><img style="width:100%;" [src]="'http://localhost:5000/' + picture"></div>
+                        <div><img style="width:100%;" [src]="picture"></div>
                     </div> 
                 </div>
             </div>

@@ -1,5 +1,5 @@
-// const url = "http://localhost:5000/"; //asosiy
-const url = "https://tiilapi.ferpi.uz/"; //asosiy
+const url = "http://localhost:5000/"; //asosiy
+// const url = "https://tiilapi.ferpi.uz/"; //asosiy
 
 export const environment = {
   production: true,
@@ -11,6 +11,9 @@ export const environment = {
     },
     review_project:{
       path: url + 'posts/review/'
+    },
+    get_file:{
+      path: url + 'posts/file/'
     },
     get_one_project:{
       path: url + 'posts/getOne/'
