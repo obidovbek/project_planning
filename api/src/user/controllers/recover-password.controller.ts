@@ -37,12 +37,8 @@ export class RecoverPasswordController {
           html: messageBody,
           // html: `<a style="color:red;" href="http://localhost:4200/auth/recover-pass?t=${token}"><button>TIKLASH</button></a>`,
         });
-      }
+    }
     
-      // @Get()
-      // showHTML(@Res() response){
-      //   return response.render('mail/confirmation', { message: 'Hello world!' });
-      // }
       @Get()
       async sendMailSec(email: string, name: string) {
         await this.mailerService.sendMail({
